@@ -16,6 +16,7 @@ import NativeBaseIcon from "./components/NativeBaseIcon";
 import { Platform } from "react-native";
 import HomePage from "./src/pages/HomePage";
 import AuthPage from "./src/pages/AuthPage";
+import SignUp from "./src/pages/SignUp";
 // Define the config
 const config = {
     useSystemColorMode: false,
@@ -28,7 +29,7 @@ export const theme = extendTheme({ config });
 export default function App() {
     return (
         <NativeBaseProvider>
-            <AuthPage />
+            <SignUp />
         </NativeBaseProvider>
     );
 }

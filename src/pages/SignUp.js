@@ -17,7 +17,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { WarningOutlineIcon } from "native-base";
 
-const AuthPage = () => {
+const SignUp = () => {
     const windowWidth = Dimensions.get("window").width;
     const windowHeight = Dimensions.get("window").height;
 
@@ -31,59 +31,34 @@ const AuthPage = () => {
                     justifyContent="flex-start"
                     alignItems="center"
                 >
-                    <Text
-                        style={{
-                            ...styles.innerText,
-                            marginTop: windowHeight * 0.1,
-                        }}
-                    >
-                        NearWear
-                    </Text>
                     <Box>
-                        <Flex justify="center" flexDirection="row" my={10}>
-                            <Box
-                                mx={2}
-                                height={45}
-                                width={60}
-                                bgColor="#4285F4"
-                            >
-                                <AntDesign
-                                    style={styles.icon}
-                                    name="google"
-                                    size={24}
-                                    color="white"
-                                />
-                            </Box>
-                            <Box
-                                mx={2}
-                                height={45}
-                                width={60}
-                                bgColor="#4267B2"
-                            >
-                                <FontAwesome
-                                    style={styles.icon}
-                                    name="facebook-f"
-                                    size={24}
-                                    color="white"
-                                />
-                            </Box>
-
-                            <Box
-                                mx={2}
-                                height={45}
-                                width={60}
-                                bgColor="#00acee"
-                            >
-                                <AntDesign
-                                    style={styles.icon}
-                                    name="twitter"
-                                    size={24}
-                                    color="white"
-                                />
-                            </Box>
-                        </Flex>
                         <Box alignItems="center">
+                            <Text style={{ color: colors.primary[300] }}>
+                                Please provide the following information
+                            </Text>
                             <Box w="150%">
+                                <FormControl isRequired>
+                                    <Stack mx="4">
+                                        <FormControl.Label>
+                                            Name
+                                        </FormControl.Label>
+                                        <Input
+                                            color="white"
+                                            type="text"
+                                            placeholder="John Doe.."
+                                        />
+                                        <FormControl.HelperText>
+                                            Must be atleast 6 characters.
+                                        </FormControl.HelperText>
+                                        <FormControl.ErrorMessage
+                                            leftIcon={
+                                                <WarningOutlineIcon size="xs" />
+                                            }
+                                        >
+                                            Atleast 6 characters are required.
+                                        </FormControl.ErrorMessage>
+                                    </Stack>
+                                </FormControl>
                                 <FormControl isRequired>
                                     <Stack mx="4">
                                         <FormControl.Label>
@@ -128,55 +103,61 @@ const AuthPage = () => {
                                         </FormControl.ErrorMessage>
                                     </Stack>
                                 </FormControl>
+                                <FormControl isRequired>
+                                    <Stack mx="4">
+                                        <FormControl.Label>
+                                            Confirm Password
+                                        </FormControl.Label>
+                                        <Input
+                                            color="white"
+                                            type="password"
+                                            placeholder="Your password here again"
+                                        />
+                                        <FormControl.HelperText>
+                                            Must be atleast 6 characters.
+                                        </FormControl.HelperText>
+                                        <FormControl.ErrorMessage
+                                            leftIcon={
+                                                <WarningOutlineIcon size="xs" />
+                                            }
+                                        >
+                                            Atleast 6 characters are required.
+                                        </FormControl.ErrorMessage>
+                                    </Stack>
+                                </FormControl>
+                                <FormControl isRequired>
+                                    <Stack mx="4">
+                                        <FormControl.Label>
+                                            NID No.
+                                        </FormControl.Label>
+                                        <Input
+                                            color="white"
+                                            type="text"
+                                            placeholder="Your NID number here"
+                                        />
+                                        <FormControl.HelperText>
+                                            Must be atleast 6 characters.
+                                        </FormControl.HelperText>
+                                        <FormControl.ErrorMessage
+                                            leftIcon={
+                                                <WarningOutlineIcon size="xs" />
+                                            }
+                                        >
+                                            Atleast 6 characters are required.
+                                        </FormControl.ErrorMessage>
+                                    </Stack>
+                                </FormControl>
                                 <Button
                                     mt={5}
                                     bgColor="primary.300"
                                     padding={5}
                                 >
-                                    <Text>Login</Text>
-                                </Button>
-                                <Button
-                                    bgColor="black"
-                                    width="40%"
-                                    marginLeft="auto"
-                                >
-                                    <Text style={{ color: "#12B422" }}>
-                                        Forgot Password
-                                    </Text>
+                                    <Text>Sign Up</Text>
                                 </Button>
                             </Box>
-                            <Text style={{ color: "white" }}>Or</Text>
                         </Box>
                     </Box>
 
-                    <FormControl isRequired>
-                        <Stack mx="4" width="84%" mx="auto">
-                            <Select
-                                color="black"
-                                placeholder="Sign Up as"
-                                textAlign="center"
-                                bgColor="primary.300"
-                                placeholderTextColor="black"
-                            >
-                                <Select.Item
-                                    label="I want to provide my dress as rent"
-                                    value="provider"
-                                />
-                                <Select.Item
-                                    label="I want to rent a dress"
-                                    value="rentor"
-                                />
-                            </Select>
-                            <FormControl.HelperText>
-                                Must be atleast 6 characters.
-                            </FormControl.HelperText>
-                            <FormControl.ErrorMessage
-                                leftIcon={<WarningOutlineIcon size="xs" />}
-                            >
-                                Atleast 6 characters are required.
-                            </FormControl.ErrorMessage>
-                        </Stack>
-                    </FormControl>
                     <Text
                         style={{
                             ...styles.innerText,
@@ -209,4 +190,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AuthPage;
+export default SignUp;
