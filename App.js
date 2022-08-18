@@ -11,12 +11,20 @@ import {
     extendTheme,
     VStack,
     Box,
+    View,
 } from "native-base";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import NativeBaseIcon from "./components/NativeBaseIcon";
 import { Platform } from "react-native";
 import HomePage from "./src/pages/HomePage";
 import AuthPage from "./src/pages/AuthPage";
 import SignUp from "./src/pages/SignUp";
+import OTPPage from "./src/pages/OTPPage";
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
 // Define the config
 const config = {
     useSystemColorMode: false,
@@ -28,8 +36,21 @@ export const theme = extendTheme({ config });
 
 export default function App() {
     return (
-        <NativeBaseProvider>
-            <SignUp />
+        <NativeBaseProvider theme={theme}>
+            <View style={{ flex: 1, backgroundColor: "#000000" }}>
+                <NavigationContainer>
+                    <Stack.Navigator
+                        screenOptions={{
+                            headerShown: false,
+                        }}
+                    >
+                        <Stack.Screen name="Home" component={HomePage} />
+                        <Stack.Screen name="Auth" component={AuthPage} />
+                        <Stack.Screen name="SignUp" component={SignUp} />
+                        <Stack.Screen name="OTP" component={OTPPage} />
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </View>
         </NativeBaseProvider>
     );
 }

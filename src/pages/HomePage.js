@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "../theme";
 import { Entypo } from "@expo/vector-icons";
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
     const windowWidth = Dimensions.get("window").width;
     const windowHeight = Dimensions.get("window").height;
 
@@ -49,6 +49,7 @@ const HomePage = () => {
                         style={{ ...styles.btn }}
                         bgColor="primary.300"
                         padding={5}
+                        onPress={() => navigation.navigate("Auth")}
                     >
                         Get Started
                     </Button>

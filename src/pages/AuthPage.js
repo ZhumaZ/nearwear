@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, StyleSheet } from "react-native";
 import {
     Flex,
@@ -16,10 +16,27 @@ import { colors } from "../theme";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { WarningOutlineIcon } from "native-base";
+import useAxios from "axios-hooks";
+import { env } from "../../env";
 
-const AuthPage = () => {
+const AuthPage = ({ navigation }) => {
     const windowWidth = Dimensions.get("window").width;
     const windowHeight = Dimensions.get("window").height;
+
+    const [formData, setFormData] = useState({});
+    const [{ data, loading, error }, refetch] = useAxios(
+        {
+            url: env.BASE_URL + "/login",
+            data: {
+                phone: formData.phone,
+            },
+        },
+        { manual: true }
+    );
+    const onLogin = () => {
+        refetch();
+        console.log(data);
+    };
 
     return (
         <Box bg="black" height={windowHeight * 1.3}>
@@ -93,6 +110,12 @@ const AuthPage = () => {
                                             color="white"
                                             type="text"
                                             placeholder="+880 "
+                                            onChangeText={(value) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    phone: value,
+                                                })
+                                            }
                                         />
                                         <FormControl.HelperText>
                                             Must be atleast 6 characters.
@@ -115,6 +138,12 @@ const AuthPage = () => {
                                             color="white"
                                             type="password"
                                             placeholder="Your password here"
+                                            onChangeText={(value) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    password: value,
+                                                })
+                                            }
                                         />
                                         <FormControl.HelperText>
                                             Must be atleast 6 characters.
@@ -132,6 +161,7 @@ const AuthPage = () => {
                                     mt={5}
                                     bgColor="primary.300"
                                     padding={5}
+                                    onPress={onLogin}
                                 >
                                     <Text>Login</Text>
                                 </Button>
@@ -150,13 +180,18 @@ const AuthPage = () => {
                     </Box>
 
                     <FormControl isRequired>
-                        <Stack mx="4" width="84%" mx="auto">
+                        <Stack width="84%" mx="auto">
                             <Select
                                 color="black"
                                 placeholder="Sign Up as"
                                 textAlign="center"
                                 bgColor="primary.300"
                                 placeholderTextColor="black"
+                                onValueChange={(value) =>
+                                    navigation.navigate("SignUp", {
+                                        signUpAs: value,
+                                    })
+                                }
                             >
                                 <Select.Item
                                     label="I want to provide my dress as rent"
