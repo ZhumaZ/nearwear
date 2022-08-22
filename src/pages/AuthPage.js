@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, StyleSheet } from "react-native";
 import {
     Flex,
@@ -24,19 +24,23 @@ const AuthPage = ({ navigation }) => {
     const windowHeight = Dimensions.get("window").height;
 
     const [formData, setFormData] = useState({});
-    const [{ data, loading, error }, refetch] = useAxios(
+    const [{ data, error }, refetch] = useAxios(
         {
+            method: "POST",
             url: env.BASE_URL + "/login",
             data: {
                 phone: formData.phone,
+                password: formData.password
             },
         },
         { manual: true }
     );
-    const onLogin = () => {
-        refetch();
-        console.log(data);
-    };
+
+    useEffect(() => {
+        if(data && !error) {
+            navigation.navigate("OTP", {token: data?.token})
+        }
+    }, [data, error])
 
     return (
         <Box bg="black" height={windowHeight * 1.3}>
@@ -101,7 +105,7 @@ const AuthPage = ({ navigation }) => {
                         </Flex>
                         <Box alignItems="center">
                             <Box w="150%">
-                                <FormControl isRequired>
+                                <FormControl isRequired isInvalid={!!error}>
                                     <Stack mx="4">
                                         <FormControl.Label>
                                             Phone Number
@@ -118,18 +122,12 @@ const AuthPage = ({ navigation }) => {
                                             }
                                         />
                                         <FormControl.HelperText>
-                                            Must be atleast 6 characters.
+                                            Enter your registered phone number
                                         </FormControl.HelperText>
-                                        <FormControl.ErrorMessage
-                                            leftIcon={
-                                                <WarningOutlineIcon size="xs" />
-                                            }
-                                        >
-                                            Atleast 6 characters are required.
-                                        </FormControl.ErrorMessage>
+                                        
                                     </Stack>
                                 </FormControl>
-                                <FormControl isRequired>
+                                <FormControl isRequired isInvalid={!!error}>
                                     <Stack mx="4">
                                         <FormControl.Label>
                                             Password
@@ -146,14 +144,14 @@ const AuthPage = ({ navigation }) => {
                                             }
                                         />
                                         <FormControl.HelperText>
-                                            Must be atleast 6 characters.
+                                            Enter your password
                                         </FormControl.HelperText>
                                         <FormControl.ErrorMessage
                                             leftIcon={
                                                 <WarningOutlineIcon size="xs" />
                                             }
                                         >
-                                            Atleast 6 characters are required.
+                                            Phone and password didn't match
                                         </FormControl.ErrorMessage>
                                     </Stack>
                                 </FormControl>
@@ -161,7 +159,9 @@ const AuthPage = ({ navigation }) => {
                                     mt={5}
                                     bgColor="primary.300"
                                     padding={5}
-                                    onPress={onLogin}
+                                    onPress={(e) => {
+                                        refetch()
+                                    }}
                                 >
                                     <Text>Login</Text>
                                 </Button>
