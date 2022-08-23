@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Text, StyleSheet } from "react-native";
 import {
     Flex,
@@ -16,10 +16,23 @@ import { colors } from "../theme";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { WarningOutlineIcon } from "native-base";
+import useAxios from "axios-hooks";
+import { env } from "../../env";
 
-const SignUp = () => {
+const SignUp = ({route, navigation}) => {
     const windowWidth = Dimensions.get("window").width;
     const windowHeight = Dimensions.get("window").height;
+
+    const [formData, setFormData] = useState({})
+    const [passMatch, setPassMatch] = useState(null)
+
+    const [{ data, error }, refetch] = useAxios();
+
+    useEffect(() => {
+        if(data && !error) {
+            navigation.navigate("REGISTRATION_SUCCESS", {signUpAs: route.params?.signUpAs})
+        }
+    }, [data, error])
 
     return (
         <Box bg="black" height={windowHeight * 1.3}>
@@ -46,6 +59,7 @@ const SignUp = () => {
                                             color="white"
                                             type="text"
                                             placeholder="John Doe.."
+                                            onChangeText={(value) => setFormData({...formData, name: value})}
                                         />
                                         <FormControl.HelperText>
                                             Must be atleast 6 characters.
@@ -68,6 +82,7 @@ const SignUp = () => {
                                             color="white"
                                             type="text"
                                             placeholder="+880 "
+                                            onChangeText={(value) => setFormData({...formData, phone: value})}
                                         />
                                         <FormControl.HelperText>
                                             Must be atleast 6 characters.
@@ -81,7 +96,7 @@ const SignUp = () => {
                                         </FormControl.ErrorMessage>
                                     </Stack>
                                 </FormControl>
-                                <FormControl isRequired>
+                                <FormControl isRequired isInvalid={passMatch === false}>
                                     <Stack mx="4">
                                         <FormControl.Label>
                                             Password
@@ -90,20 +105,11 @@ const SignUp = () => {
                                             color="white"
                                             type="password"
                                             placeholder="Your password here"
+                                            onChangeText={(value) => setFormData({...formData, password: value})}
                                         />
-                                        <FormControl.HelperText>
-                                            Must be atleast 6 characters.
-                                        </FormControl.HelperText>
-                                        <FormControl.ErrorMessage
-                                            leftIcon={
-                                                <WarningOutlineIcon size="xs" />
-                                            }
-                                        >
-                                            Atleast 6 characters are required.
-                                        </FormControl.ErrorMessage>
                                     </Stack>
                                 </FormControl>
-                                <FormControl isRequired>
+                                <FormControl isRequired isInvalid={passMatch === false}>
                                     <Stack mx="4">
                                         <FormControl.Label>
                                             Confirm Password
@@ -112,20 +118,18 @@ const SignUp = () => {
                                             color="white"
                                             type="password"
                                             placeholder="Your password here again"
+                                            onChangeText={(value) => setFormData({...formData, cpassword: value})}
                                         />
-                                        <FormControl.HelperText>
-                                            Must be atleast 6 characters.
-                                        </FormControl.HelperText>
                                         <FormControl.ErrorMessage
                                             leftIcon={
                                                 <WarningOutlineIcon size="xs" />
                                             }
                                         >
-                                            Atleast 6 characters are required.
+                                            Please provide the same password twice
                                         </FormControl.ErrorMessage>
                                     </Stack>
                                 </FormControl>
-                                <FormControl isRequired>
+                                <FormControl>
                                     <Stack mx="4">
                                         <FormControl.Label>
                                             NID No.
@@ -135,22 +139,25 @@ const SignUp = () => {
                                             type="text"
                                             placeholder="Your NID number here"
                                         />
-                                        <FormControl.HelperText>
-                                            Must be atleast 6 characters.
-                                        </FormControl.HelperText>
-                                        <FormControl.ErrorMessage
-                                            leftIcon={
-                                                <WarningOutlineIcon size="xs" />
-                                            }
-                                        >
-                                            Atleast 6 characters are required.
-                                        </FormControl.ErrorMessage>
                                     </Stack>
                                 </FormControl>
                                 <Button
                                     mt={5}
                                     bgColor="primary.300"
                                     padding={5}
+                                    onPress={(e) => {
+                                        if(formData.password === formData.cpassword) {
+                                            setPassMatch(true)
+                                            console.log(formData)
+                                            refetch({
+                                                method: "POST",
+                                                url: env.BASE_URL + "/register",
+                                                data: {...formData, role: route.params?.signUpAs}
+                                            })
+                                        } else {
+                                            setPassMatch(false)
+                                        }
+                                    }}
                                 >
                                     <Text>Sign Up</Text>
                                 </Button>

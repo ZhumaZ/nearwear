@@ -22,6 +22,7 @@ import HomePage from "./src/pages/HomePage";
 import AuthPage from "./src/pages/AuthPage";
 import SignUp from "./src/pages/SignUp";
 import OTPPage from "./src/pages/OTPPage";
+import RegistrationSuccess from "./src/pages/SignUpSuccess";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +49,7 @@ export default function App() {
                         <Stack.Screen name="Auth" component={AuthPage} />
                         <Stack.Screen name="SignUp" component={SignUp} />
                         <Stack.Screen name="OTP" component={OTPPage} />
+                        <Stack.Screen name="REGISTRATION_SUCCESS" component={RegistrationSuccess}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </View>

@@ -10,7 +10,7 @@ const OTPPage = ({route, navigation}) => {
         if(data && !error) {
             console.log('verified OTP successfully')
         }
-    })
+    }, [data, error])
 
     return (
         <>
