@@ -24,17 +24,7 @@ const AuthPage = ({ navigation }) => {
     const windowHeight = Dimensions.get("window").height;
 
     const [formData, setFormData] = useState({});
-    const [{ data, error }, refetch] = useAxios(
-        {
-            method: "POST",
-            url: env.BASE_URL + "/login",
-            data: {
-                phone: formData.phone,
-                password: formData.password
-            },
-        },
-        { manual: true }
-    );
+    const [{ data, error }, refetch] = useAxios({}, {manual: true});
 
     useEffect(() => {
         if(data && !error) {
@@ -160,7 +150,15 @@ const AuthPage = ({ navigation }) => {
                                     bgColor="primary.300"
                                     padding={5}
                                     onPress={(e) => {
-                                        refetch()
+                                        console.log(formData)
+                                        refetch({
+                                            method: "POST",
+                                            url: env.BASE_URL + "/login",
+                                            data: {
+                                                phone: formData.phone,
+                                                password: formData.password
+                                            },
+                                        },)
                                     }}
                                 >
                                     <Text>Login</Text>
