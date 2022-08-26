@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import { StyleSheet } from "react-native";
 import OTPInput from "react-native-otp-forminput";
 import {Text} from 'native-base'
 import useAxios from "axios-hooks";
@@ -15,6 +16,8 @@ const OTPPage = ({route, navigation}) => {
     return (
         <>
             <OTPInput
+            titleStyle={{color: 'white'}}
+            inputStyle={{color: 'white'}}
                 title="Enter OTP"
                 type="outline"
                 onFilledCode={(code) => {
@@ -31,7 +34,7 @@ const OTPPage = ({route, navigation}) => {
                 }}
                 
             />
-            {error && <Text>Invalid OTP</Text>}
+            <Text>Invalid OTP</Text>
         </>
     );
 };
