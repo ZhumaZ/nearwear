@@ -24,13 +24,13 @@ const AuthPage = ({ navigation }) => {
     const windowHeight = Dimensions.get("window").height;
 
     const [formData, setFormData] = useState({});
-    const [{ data, error }, refetch] = useAxios({}, {manual: true});
+    const [{ data, error }, refetch] = useAxios({}, { manual: true });
 
     useEffect(() => {
-        if(data && !error) {
-            navigation.navigate("OTP", {token: data?.token})
+        if (data && !error) {
+            navigation.navigate("OTP", { token: data?.token });
         }
-    }, [data, error])
+    }, [data, error]);
 
     return (
         <Box bg="black" height={windowHeight * 1.3}>
@@ -114,7 +114,6 @@ const AuthPage = ({ navigation }) => {
                                         <FormControl.HelperText>
                                             Enter your registered phone number
                                         </FormControl.HelperText>
-                                        
                                     </Stack>
                                 </FormControl>
                                 <FormControl isRequired isInvalid={!!error}>
@@ -150,15 +149,15 @@ const AuthPage = ({ navigation }) => {
                                     bgColor="primary.300"
                                     padding={5}
                                     onPress={(e) => {
-                                        console.log(formData)
+                                        console.log(formData);
                                         refetch({
                                             method: "POST",
                                             url: env.BASE_URL + "/login",
                                             data: {
                                                 phone: formData.phone,
-                                                password: formData.password
+                                                password: formData.password,
                                             },
-                                        },)
+                                        });
                                     }}
                                 >
                                     <Text>Login</Text>

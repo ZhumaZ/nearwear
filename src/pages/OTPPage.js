@@ -1,23 +1,23 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import OTPInput from "react-native-otp-forminput";
-import {Text} from 'native-base'
+import { Text } from "native-base";
 import useAxios from "axios-hooks";
 import { env } from "../../env";
-const OTPPage = ({route, navigation}) => {
+const OTPPage = ({ route, navigation }) => {
     const [{ data, error }, refetch] = useAxios();
 
     useEffect(() => {
-        if(data && !error) {
-            console.log('verified OTP successfully')
+        if (data && !error) {
+            console.log("verified OTP successfully");
         }
-    }, [data, error])
+    }, [data, error]);
 
     return (
         <>
             <OTPInput
-            titleStyle={{color: 'white'}}
-            inputStyle={{color: 'white'}}
+                titleStyle={{ color: "white" }}
+                inputStyle={{ color: "white" }}
                 title="Enter OTP"
                 type="outline"
                 onFilledCode={(code) => {
@@ -25,14 +25,13 @@ const OTPPage = ({route, navigation}) => {
                         method: "POST",
                         url: env.BASE_URL + "/verify",
                         data: {
-                            otp: code
+                            otp: code,
                         },
                         headers: {
-                            'Authorization': `Bearer ${route.params.token}` 
-                        }
-                    })
+                            Authorization: `Bearer ${route.params.token}`,
+                        },
+                    });
                 }}
-                
             />
             <Text>Invalid OTP</Text>
         </>
