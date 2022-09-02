@@ -4,12 +4,12 @@ import Review from "./Review";
 const ReviewList = () => {
     const data = [1, 2, 3, 4, 5, 6];
     return (
-        <Box>
+        <Box mb={20}>
             {data.map((item) => (
-                <>
-                    <Review key={item} />
+                <Box key={item}>
+                    <Review />
                     <Spacer size={1} />
-                </>
+                </Box>
             ))}
         </Box>
     );

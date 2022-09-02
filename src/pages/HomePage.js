@@ -47,7 +47,7 @@ const HomePage = ({ navigation }) => {
                     </Box>
                     <Button
                         style={{ ...styles.btn }}
-                        bgColor="primary.300"
+                        bgColor={colors.primary[300]}
                         padding={5}
                         onPress={() => navigation.navigate("Auth")}
                     >
