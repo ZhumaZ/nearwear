@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Text, Box, Image, Flex } from "native-base";
 import { AirbnbRating } from "react-native-ratings";
 import { colors } from "../theme";
-const Card = () => {
+const Card = (props) => {
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating);
     };
@@ -15,10 +15,11 @@ const Card = () => {
             borderColor={colors.primary[300]}
             borderRadius={5}
             mb={2.5}
+            {...props}
         >
             <Box
                 width="full"
-                height="2/3"
+                height={props.height2 ? props.height2 : "2/3"}
                 borderTopLeftRadius={5}
                 borderTopRightRadius={5}
             >
@@ -34,7 +35,7 @@ const Card = () => {
                 />
             </Box>
 
-            <Flex direction="row" p={2}>
+            <Flex direction="row" p={2} justifyContent="space-between">
                 <Text color={colors.primary[300]}>Silk Sharee</Text>
                 <Box mt={1} ml={3}>
                     <AirbnbRating size={10} showRating={false} />

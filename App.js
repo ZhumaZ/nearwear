@@ -26,6 +26,8 @@ import RegistrationSuccess from "./src/pages/SignUpSuccess";
 import DashboardPage from "./src/pages/Dashboard";
 import ProductSingle from "./src/pages/ProductSingle";
 import OrderDetailsPage from "./src/pages/OrderDetails";
+import OrderSummaryPage from "./src/pages/OrderSummary";
+import OrderConfirmPage from "./src/pages/OrderConfirm";
 import { Ionicons, Entypo, FontAwesome } from "@expo/vector-icons";
 import { colors } from "./src/theme";
 const Tab = createBottomTabNavigator();
@@ -41,14 +43,16 @@ const Home = () => {
             {/* <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="Auth" component={AuthPage} />
             <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="OTP" component={OTPPage} />
+            <Stack.Screen name="OTP" component={OTPPage} /> */}
             <Stack.Screen
                 name="REGISTRATION_SUCCESS"
                 component={RegistrationSuccess}
             />
-            <Stack.Screen name="DASHBOARD" component={DashboardPage} />
-            <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} /> */}
+            {/* <Stack.Screen name="DASHBOARD" component={DashboardPage} />
+            <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
             <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
+            <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
+            <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} /> */}
         </Stack.Navigator>
     );
 };
@@ -56,7 +60,7 @@ const Home = () => {
 // Define the config
 const config = {
     useSystemColorMode: false,
-    initialColorMode: "dark",
+    initialColorMode: "light",
 };
 
 // extend the theme
