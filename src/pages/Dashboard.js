@@ -15,8 +15,8 @@ import CardList from "../components/CardList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SearchBar from "../components/Search";
 import Points from "../components/Points";
+import PointChart from "../components/Charts";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
-import { LineChart } from "react-native-chart-kit";
 import { colors } from "../theme";
 import { useDimensions } from "../utils";
 
@@ -156,58 +156,40 @@ const DashboardPage = () => {
                 </Box>
                 <Box p={3}>
                     <Heading>My Points</Heading>
-                    <LineChart
-                        data={{
-                            labels: [
-                                "January",
-                                "February",
-                                "March",
-                                "April",
-                                "May",
-                                "June",
-                            ],
-                            datasets: [
-                                {
-                                    data: [
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                        Math.random() * 100,
-                                    ],
-                                },
-                            ],
-                        }}
-                        width={vw * 0.945} // from react-native
-                        height={220}
-                        yAxisLabel="$"
-                        yAxisSuffix="k"
-                        yAxisInterval={1} // optional, defaults to 1
-                        chartConfig={{
-                            backgroundColor: "#e26a00",
-                            backgroundGradientFrom: "#fb8c00",
-                            backgroundGradientTo: "#ffa726",
-                            decimalPlaces: 2, // optional, defaults to 2dp
-                            color: (opacity = 1) =>
-                                `rgba(255, 255, 255, ${opacity})`,
-                            labelColor: (opacity = 1) =>
-                                `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16,
-                            },
-                            propsForDots: {
-                                r: "6",
-                                strokeWidth: "2",
-                                stroke: "#ffa726",
-                            },
-                        }}
-                        bezier
-                        style={{
-                            marginVertical: 8,
-                            borderRadius: 5,
-                        }}
-                    />
+                    <PointChart />
+                    <Flex direction="row" justifyContent="space-around">
+                        <Center>
+                            <Text fontWeight="bold">Available</Text>
+                            <Text fontSize={30} fontWeight="bold">
+                                188
+                            </Text>
+                            <Text>NW Points</Text>
+                        </Center>
+                        <Center
+                            height="100%"
+                            borderRightWidth={1}
+                            borderRightColor="red"
+                        ></Center>
+                        <Center>
+                            <Text fontWeight="bold">Earned</Text>
+                            <Text fontSize={30} fontWeight="bold">
+                                654
+                            </Text>
+                            <Text>NW Points</Text>
+                        </Center>
+                        <Center
+                            height="100%"
+                            borderRightWidth={1}
+                            borderRightColor="red"
+                        ></Center>
+                        <Center>
+                            <Text fontWeight="bold">Total Spend</Text>
+                            <Text fontSize={30} fontWeight="bold">
+                                434
+                            </Text>
+                            <Text>NW Points</Text>
+                        </Center>
+                    </Flex>
                 </Box>
             </SafeAreaView>
         </ScrollView>
