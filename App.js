@@ -43,13 +43,13 @@ const Home = () => {
             {/* <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="Auth" component={AuthPage} />
             <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="OTP" component={OTPPage} /> */}
+            <Stack.Screen name="OTP" component={OTPPage} />
             <Stack.Screen
                 name="REGISTRATION_SUCCESS"
                 component={RegistrationSuccess}
-            />
-            {/* <Stack.Screen name="DASHBOARD" component={DashboardPage} />
-            <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
+            /> */}
+            <Stack.Screen name="DASHBOARD" component={DashboardPage} />
+            {/* <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
             <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
             <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
             <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} /> */}
