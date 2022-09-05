@@ -28,6 +28,8 @@ import ProductSingle from "./src/pages/ProductSingle";
 import OrderDetailsPage from "./src/pages/OrderDetails";
 import OrderSummaryPage from "./src/pages/OrderSummary";
 import OrderConfirmPage from "./src/pages/OrderConfirm";
+import SearchPage from "./src/pages/SearchPage";
+import DressAdd from "./src/pages/DressAdd";
 import { Ionicons, Entypo, FontAwesome } from "@expo/vector-icons";
 import { colors } from "./src/theme";
 const Tab = createBottomTabNavigator();
@@ -47,12 +49,14 @@ const Home = () => {
             <Stack.Screen
                 name="REGISTRATION_SUCCESS"
                 component={RegistrationSuccess}
-            /> */}
+            />
             <Stack.Screen name="DASHBOARD" component={DashboardPage} />
-            {/* <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
+            <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
             <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
             <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
-            <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} /> */}
+            <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} />
+            <Stack.Screen name="SEARCH" component={SearchPage} /> */}
+            <Stack.Screen name="DRESSADD" component={DressAdd} />
         </Stack.Navigator>
     );
 };
