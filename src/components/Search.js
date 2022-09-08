@@ -3,9 +3,9 @@ import { VStack, Icon, Input, Heading } from "native-base";
 import { StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../theme";
-const SearchBar = () => {
+const SearchBar = (props) => {
     return (
-        <VStack w="100%" space={5} alignSelf="center">
+        <VStack w="100%" space={5} alignSelf="center" {...props}>
             <Input
                 _input={{ color: "white" }}
                 bgColor={colors.primary[300]}
@@ -27,7 +27,6 @@ const SearchBar = () => {
                         as={<MaterialIcons name="search" />}
                     />
                 }
-             
             />
         </VStack>
     );
