@@ -33,6 +33,7 @@ import DressAdd from "./src/pages/DressAdd";
 import DressAddComplete from "./src/pages/DressAddComplete";
 import OnRent from "./src/pages/OnRent";
 import DressAll from "./src/pages/DressAll";
+import DressSingle from "./src/pages/DressSingle";
 import { Ionicons, Entypo, FontAwesome } from "@expo/vector-icons";
 import { colors } from "./src/theme";
 const Tab = createBottomTabNavigator();
@@ -64,8 +65,10 @@ const Home = () => {
                 name="DRESSADDCOMPLETE"
                 component={DressAddComplete}
             />
-            <Stack.Screen name="ONRENT" component={OnRent} /> */}
-            <Stack.Screen name="DRESSALL" component={DressAll} />
+            <Stack.Screen name="ONRENT" component={OnRent} />
+            <Stack.Screen name="DRESSALL" component={DressAll} /> */}
+            <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
+
         </Stack.Navigator>
     );
 };
