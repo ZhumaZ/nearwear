@@ -36,6 +36,7 @@ import DressAll from "./src/pages/DressAll";
 import DressSingle from "./src/pages/DressSingle";
 import { Ionicons, Entypo, FontAwesome } from "@expo/vector-icons";
 import { colors } from "./src/theme";
+import HistoryPage from "./src/pages/History";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -66,9 +67,9 @@ const Home = () => {
                 component={DressAddComplete}
             />
             <Stack.Screen name="ONRENT" component={OnRent} />
-            <Stack.Screen name="DRESSALL" component={DressAll} /> */}
-            <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
-
+            <Stack.Screen name="DRESSALL" component={DressAll} />
+            <Stack.Screen name="DRESSSINGLE" component={DressSingle} /> */}
+            <Stack.Screen name="HISTORY" component={HistoryPage} />
         </Stack.Navigator>
     );
 };
