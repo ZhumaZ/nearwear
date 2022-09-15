@@ -20,9 +20,9 @@ import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import { colors } from "../theme";
 import { useDimensions } from "../utils";
 
-const DashboardPage = () => {
+const DashboardPage = ({ rentor, provider }) => {
     const [vh, vw] = useDimensions();
-    const provider = true;
+    const admin = true;
     return (
         <ScrollView>
             <SafeAreaView>
@@ -33,7 +33,7 @@ const DashboardPage = () => {
                         justifyContent="space-between"
                         alignItems="center"
                     >
-                        {provider ? (
+                        {!rentor ? (
                             <Box my={2}>
                                 <Heading>Hi Tushpi</Heading>
                                 <Heading fontSize={18}>Welcome back</Heading>
@@ -44,36 +44,48 @@ const DashboardPage = () => {
                                 <Heading>dream wardrobe</Heading>
                             </Box>
                         )}
-
-                        <Box>
-                            <Flex
-                                direction="row"
-                                alignItems="center"
-                                borderWidth={1}
+                        {admin ? (
+                            <Avatar
+                                bg="amber.500"
                                 borderColor={colors.primary[300]}
-                                px={2}
-                                borderRadius={4}
+                                borderWidth={2}
+                                source={{
+                                    uri: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+                                }}
                             >
-                                <Points />
-                                <Spacer size={2} />
-                                <Avatar
-                                    bg="amber.500"
+                                TS
+                            </Avatar>
+                        ) : (
+                            <Box>
+                                <Flex
+                                    direction="row"
+                                    alignItems="center"
+                                    borderWidth={1}
                                     borderColor={colors.primary[300]}
-                                    borderWidth={2}
-                                    source={{
-                                        uri: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-                                    }}
+                                    px={2}
+                                    borderRadius={4}
                                 >
-                                    TS
-                                </Avatar>
-                            </Flex>
-                        </Box>
+                                    <Points />
+                                    <Spacer size={2} />
+                                    <Avatar
+                                        bg="amber.500"
+                                        borderColor={colors.primary[300]}
+                                        borderWidth={2}
+                                        source={{
+                                            uri: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+                                        }}
+                                    >
+                                        TS
+                                    </Avatar>
+                                </Flex>
+                            </Box>
+                        )}
                     </Flex>
                     {provider ? (
                         <Text fontWeight="bold" mb={3}>
                             Start creating your product for rent
                         </Text>
-                    ) : (
+                    ) : rentor ? (
                         <Button
                             width="15%"
                             p={0}
@@ -82,6 +94,8 @@ const DashboardPage = () => {
                         >
                             Sharee
                         </Button>
+                    ) : (
+                        <></>
                     )}
                     {provider ? (
                         <Flex direction="row" flexWrap="wrap">
@@ -150,47 +164,97 @@ const DashboardPage = () => {
                                 </Center>
                             </TouchableOpacity>
                         </Flex>
-                    ) : (
+                    ) : rentor ? (
                         <CardList />
+                    ) : (
+                        <Box
+                            borderWidth={1}
+                            p={3}
+                            height={260}
+                            borderColor={colors.primary[300]}
+                            borderRadius={5}
+                        >
+                            <Box>
+                                <Flex
+                                    direction="row"
+                                    justifyContent="center"
+                                    alignItems="stretch"
+                                >
+                                    <Box>
+                                        <Text fontSize={10} pr={2}>
+                                            Profit
+                                        </Text>
+                                        <Text fontSize={10} pr={2}>
+                                            Total
+                                        </Text>
+                                        <Text fontSize={10} pr={2}>
+                                            Cost
+                                        </Text>
+                                    </Box>
+                                    <Flex justifyContent="space-around">
+                                        <Box
+                                            w={10}
+                                            h={1.5}
+                                            bgColor="green.700"
+                                        ></Box>
+                                        <Box
+                                            w={10}
+                                            h={1.5}
+                                            bgColor={colors.primary[300]}
+                                        ></Box>
+                                        <Box
+                                            w={10}
+                                            h={1.5}
+                                            bgColor="red.500"
+                                        ></Box>
+                                    </Flex>
+                                </Flex>
+
+                                <PointChart />
+                            </Box>
+                        </Box>
                     )}
                 </Box>
-                <Box p={3}>
-                    <Heading>My Points</Heading>
-                    <PointChart />
-                    <Flex direction="row" justifyContent="space-around">
-                        <Center>
-                            <Text fontWeight="bold">Available</Text>
-                            <Text fontSize={30} fontWeight="bold">
-                                188
-                            </Text>
-                            <Text>NW Points</Text>
-                        </Center>
-                        <Center
-                            height="100%"
-                            borderRightWidth={1}
-                            borderRightColor="red"
-                        ></Center>
-                        <Center>
-                            <Text fontWeight="bold">Earned</Text>
-                            <Text fontSize={30} fontWeight="bold">
-                                654
-                            </Text>
-                            <Text>NW Points</Text>
-                        </Center>
-                        <Center
-                            height="100%"
-                            borderRightWidth={1}
-                            borderRightColor="red"
-                        ></Center>
-                        <Center>
-                            <Text fontWeight="bold">Total Spend</Text>
-                            <Text fontSize={30} fontWeight="bold">
-                                434
-                            </Text>
-                            <Text>NW Points</Text>
-                        </Center>
-                    </Flex>
-                </Box>
+
+                {!admin && (
+                    <Box p={3}>
+                        <Heading>My Points</Heading>
+                        <PointChart />
+                        <Flex direction="row" justifyContent="space-around">
+                            <Center>
+                                <Text fontWeight="bold">Available</Text>
+                                <Text fontSize={30} fontWeight="bold">
+                                    188
+                                </Text>
+                                <Text>NW Points</Text>
+                            </Center>
+                            <Center
+                                height="100%"
+                                borderRightWidth={1}
+                                borderRightColor="red"
+                            ></Center>
+                            <Center>
+                                <Text fontWeight="bold">Earned</Text>
+                                <Text fontSize={30} fontWeight="bold">
+                                    654
+                                </Text>
+                                <Text>NW Points</Text>
+                            </Center>
+                            <Center
+                                height="100%"
+                                borderRightWidth={1}
+                                borderRightColor="red"
+                            ></Center>
+                            <Center>
+                                <Text fontWeight="bold">Total Spend</Text>
+                                <Text fontSize={30} fontWeight="bold">
+                                    434
+                                </Text>
+                                <Text>NW Points</Text>
+                            </Center>
+                        </Flex>
+                    </Box>
+                )}
             </SafeAreaView>
         </ScrollView>
     );

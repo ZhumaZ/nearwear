@@ -54,9 +54,9 @@ const Home = () => {
             <Stack.Screen
                 name="REGISTRATION_SUCCESS"
                 component={RegistrationSuccess}
-            />
+            /> */}
             <Stack.Screen name="DASHBOARD" component={DashboardPage} />
-            <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
+            {/* <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
             <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
             <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
             <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} />
@@ -68,8 +68,8 @@ const Home = () => {
             />
             <Stack.Screen name="ONRENT" component={OnRent} />
             <Stack.Screen name="DRESSALL" component={DressAll} />
-            <Stack.Screen name="DRESSSINGLE" component={DressSingle} /> */}
-            <Stack.Screen name="HISTORY" component={HistoryPage} />
+            <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
+            <Stack.Screen name="HISTORY" component={HistoryPage} /> */}
         </Stack.Navigator>
     );
 };
@@ -147,19 +147,17 @@ export default function App() {
                         <Tab.Screen
                             options={{ title: "Chat" }}
                             name="ChatTab"
-                            component={() => {
-                                return <></>;
-                            }}
+                            component={Home}
                         />
                         <Tab.Screen
                             options={{ title: "Shop" }}
                             name="ShopTab"
-                            component={() => {}}
+                            component={Home}
                         />
                         <Tab.Screen
                             options={{ title: "Profile" }}
                             name="ProfileTab"
-                            component={() => {}}
+                            component={Home}
                         />
                     </Tab.Navigator>
                 </NavigationContainer>
