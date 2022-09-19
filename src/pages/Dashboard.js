@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import {
     Avatar,
@@ -10,6 +10,8 @@ import {
     Button,
     Text,
     Center,
+    Pressable,
+    View,
 } from "native-base";
 import CardList from "../components/CardList";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,10 +21,18 @@ import PointChart from "../components/Charts";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import { colors } from "../theme";
 import { useDimensions } from "../utils";
+import OrderCard from "../components/OrderCard";
+import OrderCardList from "../components/OrderCardList";
 
 const DashboardPage = ({ rentor, provider }) => {
     const [vh, vw] = useDimensions();
     const admin = true;
+    const [activeOrderBar, setActiveOrderBar] = useState("all");
+
+    const handleActiveOrderBar = (value) => {
+        setActiveOrderBar(value);
+    };
+
     return (
         <ScrollView>
             <SafeAreaView>
@@ -167,50 +177,353 @@ const DashboardPage = ({ rentor, provider }) => {
                     ) : rentor ? (
                         <CardList />
                     ) : (
-                        <Box
-                            borderWidth={1}
-                            p={3}
-                            height={260}
-                            borderColor={colors.primary[300]}
-                            borderRadius={5}
-                        >
+                        <Box>
+                            <Flex direction="row">
+                                <Center w={5}>
+                                    <Text
+                                        textAlign="center"
+                                        fontSize={10}
+                                        bgColor="green.500"
+                                        style={{
+                                            transform: [{ rotateZ: "-90deg" }],
+                                        }}
+                                        width={200}
+                                    >
+                                        {
+                                            "<------------------ Amount (TK) ------------------->"
+                                        }
+                                    </Text>
+                                </Center>
+                                <Box
+                                    borderWidth={1}
+                                    p={3}
+                                    height={260}
+                                    borderColor={colors.primary[300]}
+                                    borderRadius={5}
+                                    flex={1}
+                                >
+                                    <Flex
+                                        direction="row"
+                                        justifyContent="center"
+                                        alignItems="stretch"
+                                    >
+                                        <Box>
+                                            <Text fontSize={10} pr={2}>
+                                                Profit
+                                            </Text>
+                                            <Text fontSize={10} pr={2}>
+                                                Total
+                                            </Text>
+                                            <Text fontSize={10} pr={2}>
+                                                Cost
+                                            </Text>
+                                        </Box>
+                                        <Flex justifyContent="space-around">
+                                            <Box
+                                                w={10}
+                                                h={1.5}
+                                                bgColor="green.700"
+                                            ></Box>
+                                            <Box
+                                                w={10}
+                                                h={1.5}
+                                                bgColor={colors.primary[300]}
+                                            ></Box>
+                                            <Box
+                                                w={10}
+                                                h={1.5}
+                                                bgColor="red.500"
+                                            ></Box>
+                                        </Flex>
+                                    </Flex>
+
+                                    <PointChart />
+                                </Box>
+                            </Flex>
+                            <Center>
+                                <Text fontSize={10}>
+                                    {
+                                        "<-------------------------- Date ------------------------>"
+                                    }
+                                </Text>
+                            </Center>
                             <Box>
+                                {/* Circles */}
                                 <Flex
+                                    mt={5}
                                     direction="row"
-                                    justifyContent="center"
-                                    alignItems="stretch"
+                                    justifyContent="space-around"
                                 >
                                     <Box>
-                                        <Text fontSize={10} pr={2}>
-                                            Profit
-                                        </Text>
-                                        <Text fontSize={10} pr={2}>
-                                            Total
-                                        </Text>
-                                        <Text fontSize={10} pr={2}>
-                                            Cost
-                                        </Text>
-                                    </Box>
-                                    <Flex justifyContent="space-around">
-                                        <Box
-                                            w={10}
-                                            h={1.5}
+                                        <Center
+                                            h="100px"
+                                            w="100px"
                                             bgColor="green.700"
-                                        ></Box>
-                                        <Box
-                                            w={10}
-                                            h={1.5}
+                                            borderRadius={100}
+                                        >
+                                            <Box></Box>
+                                            <Center
+                                                h="80px"
+                                                w="80px"
+                                                bgColor="white"
+                                                position="absolute"
+                                                borderRadius={100}
+                                            >
+                                                <Text
+                                                    fontSize={30}
+                                                    fontWeight="bold"
+                                                >
+                                                    145
+                                                </Text>
+                                                <Text mt={-2}>TK</Text>
+                                            </Center>
+                                        </Center>
+                                    </Box>
+                                    <Box>
+                                        <Center
+                                            h="100px"
+                                            w="100px"
                                             bgColor={colors.primary[300]}
-                                        ></Box>
-                                        <Box
-                                            w={10}
-                                            h={1.5}
+                                            borderRadius={100}
+                                        >
+                                            <Box></Box>
+                                            <Center
+                                                h="80px"
+                                                w="80px"
+                                                bgColor="white"
+                                                position="absolute"
+                                                borderRadius={100}
+                                            >
+                                                <Text
+                                                    fontSize={30}
+                                                    fontWeight="bold"
+                                                >
+                                                    145
+                                                </Text>
+                                                <Text mt={-2}>TK</Text>
+                                            </Center>
+                                        </Center>
+                                    </Box>
+                                    <Box>
+                                        <Center
+                                            h="100px"
+                                            w="100px"
                                             bgColor="red.500"
-                                        ></Box>
-                                    </Flex>
+                                            borderRadius={100}
+                                        >
+                                            <Box></Box>
+                                            <Center
+                                                h="80px"
+                                                w="80px"
+                                                bgColor="white"
+                                                position="absolute"
+                                                borderRadius={100}
+                                            >
+                                                <Text
+                                                    fontSize={30}
+                                                    fontWeight="bold"
+                                                >
+                                                    145
+                                                </Text>
+                                                <Text mt={-2}>TK</Text>
+                                            </Center>
+                                        </Center>
+                                    </Box>
                                 </Flex>
-
-                                <PointChart />
+                                {/* Orders List */}
+                                <Box mt={5}>
+                                    <Flex
+                                        direction="row"
+                                        justifyContent="space-between"
+                                        borderBottomWidth={3}
+                                        borderColor={colors.primary[300]}
+                                    >
+                                        <Pressable
+                                            onPress={() =>
+                                                handleActiveOrderBar("all")
+                                            }
+                                        >
+                                            <Box
+                                                bgColor={
+                                                    activeOrderBar === "all"
+                                                        ? colors.primary[300]
+                                                        : null
+                                                }
+                                                px={
+                                                    activeOrderBar === "all"
+                                                        ? 10
+                                                        : 0
+                                                }
+                                                py={
+                                                    activeOrderBar === "all"
+                                                        ? 0.5
+                                                        : 0
+                                                }
+                                                borderTopRightRadius={50}
+                                                borderTopLeftRadius={50}
+                                            >
+                                                <Text
+                                                    color={
+                                                        activeOrderBar === "all"
+                                                            ? "white"
+                                                            : "black"
+                                                    }
+                                                    fontWeight={
+                                                        activeOrderBar === "all"
+                                                            ? "bold"
+                                                            : "normal"
+                                                    }
+                                                >
+                                                    All Orders
+                                                </Text>
+                                            </Box>
+                                        </Pressable>
+                                        <Pressable
+                                            onPress={() =>
+                                                handleActiveOrderBar(
+                                                    "confirmed"
+                                                )
+                                            }
+                                        >
+                                            <Box
+                                                bgColor={
+                                                    activeOrderBar ===
+                                                    "confirmed"
+                                                        ? colors.primary[300]
+                                                        : null
+                                                }
+                                                px={
+                                                    activeOrderBar ===
+                                                    "confirmed"
+                                                        ? 10
+                                                        : 0
+                                                }
+                                                py={
+                                                    activeOrderBar ===
+                                                    "confirmed"
+                                                        ? 0.5
+                                                        : 0
+                                                }
+                                                borderTopRightRadius={50}
+                                                borderTopLeftRadius={50}
+                                            >
+                                                <Text
+                                                    color={
+                                                        activeOrderBar ===
+                                                        "confirmed"
+                                                            ? "white"
+                                                            : "black"
+                                                    }
+                                                    fontWeight={
+                                                        activeOrderBar ===
+                                                        "confirmed"
+                                                            ? "bold"
+                                                            : "normal"
+                                                    }
+                                                >
+                                                    Confirmed
+                                                </Text>
+                                            </Box>
+                                        </Pressable>
+                                        <Pressable
+                                            onPress={() =>
+                                                handleActiveOrderBar(
+                                                    "on-delivery"
+                                                )
+                                            }
+                                        >
+                                            <Box
+                                                bgColor={
+                                                    activeOrderBar ===
+                                                    "on-delivery"
+                                                        ? colors.primary[300]
+                                                        : null
+                                                }
+                                                px={
+                                                    activeOrderBar ===
+                                                    "on-delivery"
+                                                        ? 10
+                                                        : 0
+                                                }
+                                                py={
+                                                    activeOrderBar ===
+                                                    "on-delivery"
+                                                        ? 0.5
+                                                        : 0
+                                                }
+                                                borderTopRightRadius={50}
+                                                borderTopLeftRadius={50}
+                                            >
+                                                <Text
+                                                    color={
+                                                        activeOrderBar ===
+                                                        "on-delivery"
+                                                            ? "white"
+                                                            : "black"
+                                                    }
+                                                    fontWeight={
+                                                        activeOrderBar ===
+                                                        "on-delivery"
+                                                            ? "bold"
+                                                            : "normal"
+                                                    }
+                                                >
+                                                    On-Delivery
+                                                </Text>
+                                            </Box>
+                                        </Pressable>
+                                        <Pressable
+                                            onPress={() =>
+                                                handleActiveOrderBar(
+                                                    "delivered"
+                                                )
+                                            }
+                                        >
+                                            <Box
+                                                bgColor={
+                                                    activeOrderBar ===
+                                                    "delivered"
+                                                        ? colors.primary[300]
+                                                        : null
+                                                }
+                                                px={
+                                                    activeOrderBar ===
+                                                    "delivered"
+                                                        ? 10
+                                                        : 0
+                                                }
+                                                py={
+                                                    activeOrderBar ===
+                                                    "delivered"
+                                                        ? 0.5
+                                                        : 0
+                                                }
+                                                borderTopRightRadius={50}
+                                                borderTopLeftRadius={50}
+                                            >
+                                                <Text
+                                                    color={
+                                                        activeOrderBar ===
+                                                        "delivered"
+                                                            ? "white"
+                                                            : "black"
+                                                    }
+                                                    fontWeight={
+                                                        activeOrderBar ===
+                                                        "delivered"
+                                                            ? "bold"
+                                                            : "normal"
+                                                    }
+                                                >
+                                                    Delivered
+                                                </Text>
+                                            </Box>
+                                        </Pressable>
+                                    </Flex>
+                                    <Box my={1}>
+                                        <OrderCardList />
+                                    </Box>
+                                </Box>
                             </Box>
                         </Box>
                     )}
