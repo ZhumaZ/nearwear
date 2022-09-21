@@ -37,6 +37,8 @@ import DressSingle from "./src/pages/DressSingle";
 import { Ionicons, Entypo, FontAwesome } from "@expo/vector-icons";
 import { colors } from "./src/theme";
 import HistoryPage from "./src/pages/History";
+import AllUsers from "./src/pages/AllUsers";
+import ManageUser from "./src/pages/ManageUser";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -54,9 +56,9 @@ const Home = () => {
             <Stack.Screen
                 name="REGISTRATION_SUCCESS"
                 component={RegistrationSuccess}
-            /> */}
+            />
             <Stack.Screen name="DASHBOARD" component={DashboardPage} />
-            {/* <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
+            <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
             <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
             <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
             <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} />
@@ -69,7 +71,9 @@ const Home = () => {
             <Stack.Screen name="ONRENT" component={OnRent} />
             <Stack.Screen name="DRESSALL" component={DressAll} />
             <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
-            <Stack.Screen name="HISTORY" component={HistoryPage} /> */}
+            <Stack.Screen name="HISTORY" component={HistoryPage} />
+            <Stack.Screen name="ALLUSERS" component={AllUsers} /> */}
+            <Stack.Screen name="MANAGEUSER" component={ManageUser} />
         </Stack.Navigator>
     );
 };
