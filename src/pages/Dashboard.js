@@ -24,20 +24,49 @@ import { useDimensions } from "../utils";
 import OrderCard from "../components/OrderCard";
 import OrderCardList from "../components/OrderCardList";
 
-const DashboardPage = ({ rentor, provider }) => {
+const DashboardPage = ({ route, navigation }) => {
     const [vh, vw] = useDimensions();
-    const admin = true;
     const [activeOrderBar, setActiveOrderBar] = useState("all");
 
+    const rentor = route.params.type === "rentor" ? true : false;
+    const provider = route.params.type === "provider" ? true : false;
+    const admin = route.params.type === "admin" ? true : false;
+
+    // Admin click handlers
     const handleActiveOrderBar = (value) => {
         setActiveOrderBar(value);
     };
 
+    const handleProductViewInfo = (value) => {
+        console.log("View product - Id ", value);
+        navigation.navigate("DRESSSINGLE", { id: value });
+    };
+    const handleSendMessage = (value) => {
+        console.log("Send Message - Id ", value);
+    };
+    const handleManage = (value) => {
+        console.log("Manage product - Id ", value);
+    };
+
+    // Rentor click handlers
+    const handleProductPress = (value) => {
+        console.log("got product click of ID: ", value);
+        navigation.navigate("PRODUCTSINGLE", { id: value });
+    };
+
+    // Common click handlers
+
+    const handleSearch = (value) => {
+        console.log("Searched for: ", value);
+        navigation.navigate("ShopTab", { searchTerm: value });
+    };
+
+    console.log(route.params);
     return (
         <ScrollView>
             <SafeAreaView>
                 <Box p={3}>
-                    <SearchBar />
+                    <SearchBar onPress={handleSearch} />
                     <Flex
                         direction="row"
                         justifyContent="space-between"
@@ -175,7 +204,7 @@ const DashboardPage = ({ rentor, provider }) => {
                             </TouchableOpacity>
                         </Flex>
                     ) : rentor ? (
-                        <CardList />
+                        <CardList onPress={handleProductPress} />
                     ) : (
                         <Box>
                             <Flex direction="row">
@@ -521,7 +550,11 @@ const DashboardPage = ({ rentor, provider }) => {
                                         </Pressable>
                                     </Flex>
                                     <Box my={1}>
-                                        <OrderCardList />
+                                        <OrderCardList
+                                            onPress={handleProductViewInfo}
+                                            onSendMessage={handleSendMessage}
+                                            onManage={handleManage}
+                                        />
                                     </Box>
                                 </Box>
                             </Box>

@@ -10,7 +10,7 @@ const OrderCard = (props) => {
             borderRadius={5}
             bgColor="#fff"
             mb={1}
-            onPress={props.onPress}
+            onPress={() => props.onPress(props.id)}
             py={1}
         >
             <Flex direction="row" height={20} justifyContent="space-between">
@@ -45,7 +45,12 @@ const OrderCard = (props) => {
                 </Flex>
 
                 <Flex mr={2} justifyContent="center">
-                    <Button py={0.5} px={3} bgColor={colors.primary[300]}>
+                    <Button
+                        py={0.5}
+                        px={3}
+                        bgColor={colors.primary[300]}
+                        onPress={() => props.onPress(props.id)}
+                    >
                         View Info
                     </Button>
                     <Button
@@ -53,6 +58,7 @@ const OrderCard = (props) => {
                         px={3}
                         mt={0.5}
                         bgColor={colors.primary[300]}
+                        onPress={() => props.onSendMessage(props.id)}
                     >
                         Send Message
                     </Button>
@@ -61,6 +67,7 @@ const OrderCard = (props) => {
                         px={3}
                         mt={0.5}
                         bgColor={colors.primary[300]}
+                        onPress={() => props.onManage(props.id)}
                     >
                         Manage Order
                     </Button>

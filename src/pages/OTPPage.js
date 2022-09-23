@@ -21,16 +21,17 @@ const OTPPage = ({ route, navigation }) => {
                 title="Enter OTP"
                 type="outline"
                 onFilledCode={(code) => {
-                    refetch({
-                        method: "POST",
-                        url: env.BASE_URL + "/verify",
-                        data: {
-                            otp: code,
-                        },
-                        headers: {
-                            Authorization: `Bearer ${route.params.token}`,
-                        },
-                    });
+                    // refetch({
+                    //     method: "POST",
+                    //     url: env.BASE_URL + "/verify",
+                    //     data: {
+                    //         otp: code,
+                    //     },
+                    //     headers: {
+                    //         Authorization: `Bearer ${route.params.token}`,
+                    //     },
+                    // });
+                    navigation.navigate("DASHBOARD", { type: "rentor" });
                 }}
             />
             <Text>Invalid OTP</Text>

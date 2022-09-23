@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { VStack, Icon, Input, Heading } from "native-base";
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../theme";
 const SearchBar = (props) => {
+    const [value, setValue] = useState("");
     return (
         <VStack w="100%" space={5} alignSelf="center" {...props}>
             <Input
+                value={value}
+                onChangeText={(text) => setValue(text)}
                 _input={{ color: "white" }}
                 bgColor={colors.primary[300]}
                 placeholder="Search Dresses"
@@ -18,14 +21,16 @@ const SearchBar = (props) => {
                 px="5"
                 fontSize="14"
                 InputRightElement={
-                    <Icon
-                        m="2"
-                        ml="3"
-                        mr="3"
-                        size="6"
-                        color="white"
-                        as={<MaterialIcons name="search" />}
-                    />
+                    <Pressable onPress={() => props.onPress(value)}>
+                        <Icon
+                            m="2"
+                            ml="3"
+                            mr="3"
+                            size="6"
+                            color="white"
+                            as={<MaterialIcons name="search" />}
+                        />
+                    </Pressable>
                 }
             />
         </VStack>

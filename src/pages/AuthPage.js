@@ -150,13 +150,16 @@ const AuthPage = ({ navigation }) => {
                                     padding={5}
                                     onPress={(e) => {
                                         console.log(formData);
-                                        refetch({
-                                            method: "POST",
-                                            url: env.BASE_URL + "/login",
-                                            data: {
-                                                phone: formData.phone,
-                                                password: formData.password,
-                                            },
+                                        // refetch({
+                                        //     method: "POST",
+                                        //     url: env.BASE_URL + "/login",
+                                        //     data: {
+                                        //         phone: formData.phone,
+                                        //         password: formData.password,
+                                        //     },
+                                        // });
+                                        navigation.navigate("OTP", {
+                                            token: "dasdadaasasa",
                                         });
                                     }}
                                 >

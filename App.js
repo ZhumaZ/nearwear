@@ -12,6 +12,8 @@ import {
     VStack,
     Box,
     View,
+    Flex,
+    Pressable,
 } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -34,13 +36,32 @@ import DressAddComplete from "./src/pages/DressAddComplete";
 import OnRent from "./src/pages/OnRent";
 import DressAll from "./src/pages/DressAll";
 import DressSingle from "./src/pages/DressSingle";
-import { Ionicons, Entypo, FontAwesome } from "@expo/vector-icons";
+import { Ionicons, Entypo, FontAwesome, AntDesign } from "@expo/vector-icons";
 import { colors } from "./src/theme";
 import HistoryPage from "./src/pages/History";
 import AllUsers from "./src/pages/AllUsers";
 import ManageUser from "./src/pages/ManageUser";
+import { useDimensions } from "./src/utils";
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+const NavHeader = (props) => {
+    const [vh, vw] = useDimensions();
+
+    return (
+        <Flex direction="row">
+            <Pressable onPress={() => console.log("im pressed")}>
+                <AntDesign name="left" size={24} color="black" />
+            </Pressable>
+            <Flex flex={0.96} alignItems="center">
+                <Text fontWeight="bold" fontSize="16">
+                    {props.children}
+                </Text>
+            </Flex>
+        </Flex>
+    );
+};
 
 const Home = () => {
     return (
@@ -49,7 +70,8 @@ const Home = () => {
                 headerShown: false,
             }}
         >
-            {/* <Stack.Screen name="Home" component={HomePage} />
+            {/* Common Screens STARTS */}
+            <Stack.Screen name="Home" component={HomePage} />
             <Stack.Screen name="Auth" component={AuthPage} />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="OTP" component={OTPPage} />
@@ -58,11 +80,17 @@ const Home = () => {
                 component={RegistrationSuccess}
             />
             <Stack.Screen name="DASHBOARD" component={DashboardPage} />
+
+            {/* Common Screens STARTS */}
+
+            {/* Rentor Screens STARTS */}
             <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
             <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
             <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
             <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} />
-            <Stack.Screen name="SEARCH" component={SearchPage} />
+            {/* Rentor Screens ENDS */}
+
+            {/* Provider Screens STARTS */}
             <Stack.Screen name="DRESSADD" component={DressAdd} />
             <Stack.Screen
                 name="DRESSADDCOMPLETE"
@@ -72,8 +100,50 @@ const Home = () => {
             <Stack.Screen name="DRESSALL" component={DressAll} />
             <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
             <Stack.Screen name="HISTORY" component={HistoryPage} />
-            <Stack.Screen name="ALLUSERS" component={AllUsers} /> */}
+            {/* Provider Screens ENDS */}
+
+            {/* Admin Screens STARTS */}
+            <Stack.Screen name="ALLUSERS" component={AllUsers} />
             <Stack.Screen name="MANAGEUSER" component={ManageUser} />
+            {/* Admin Screens ENDS */}
+        </Stack.Navigator>
+    );
+};
+
+const Chat = () => {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: colors.primary[300],
+                },
+                headerTintColor: "#fff",
+            }}
+        >
+            <Stack.Screen
+                name="Messages"
+                options={{ headerTitle: (props) => <NavHeader {...props} /> }}
+                component={() => <></>}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const Order = () => {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: colors.primary[300],
+                },
+                headerTintColor: "#fff",
+            }}
+        >
+            <Stack.Screen name="SEARCH" component={SearchPage} />
+            <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
+            <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
+            <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
+            <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} />
         </Stack.Navigator>
     );
 };
@@ -151,12 +221,12 @@ export default function App() {
                         <Tab.Screen
                             options={{ title: "Chat" }}
                             name="ChatTab"
-                            component={Home}
+                            component={Chat}
                         />
                         <Tab.Screen
                             options={{ title: "Shop" }}
                             name="ShopTab"
-                            component={Home}
+                            component={Order}
                         />
                         <Tab.Screen
                             options={{ title: "Profile" }}

@@ -6,7 +6,12 @@ import { TouchableOpacity } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import CardList from "../components/CardList";
 import { colors } from "../theme";
-const SearchPage = () => {
+const SearchPage = ({ route, navigation }) => {
+    // Rentor click handlers
+    const handleProductPress = (value) => {
+        console.log("got product click of ID: ", value);
+        navigation.navigate("PRODUCTSINGLE", { id: value });
+    };
     return (
         <ScrollView>
             <SafeAreaView>
@@ -19,7 +24,7 @@ const SearchPage = () => {
                                 <Text fontWeight="bold"> Filter</Text>
                             </Flex>
                         </TouchableOpacity>
-                        <CardList />
+                        <CardList onPress={handleProductPress} />
                     </Box>
                     <Center>
                         <Button
