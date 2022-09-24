@@ -1,17 +1,26 @@
 import React from "react";
 import { Box, ScrollView, Text, Spacer, Button, Icon } from "native-base";
-import { SafeAreaView } from "react-native-safe-area-context";
 import ProductSingleCard from "../components/ProductSingleCard";
 import ReviewList from "../components/ReviewList";
 import { useDimensions } from "../utils";
 import { colors } from "../theme";
 import { MaterialIcons } from "@expo/vector-icons";
+import { NavHeader } from "../components/NavHeader";
 
-const ProductSingle = () => {
+const ProductSingle = ({ route, navigation }) => {
     const [vh, vw] = useDimensions();
-
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: (props) => (
+                <NavHeader
+                    {...props}
+                    children={"Silk Sharee " + route.params.id}
+                />
+            ),
+        });
+    }, [route, navigation]);
     return (
-        <SafeAreaView>
+        <Box>
             <ScrollView>
                 <ProductSingleCard />
                 <Box p={3}>
@@ -41,14 +50,20 @@ const ProductSingle = () => {
                 }
                 bgColor={colors.primary[300]}
                 position="absolute"
-                top={vh * 0.9}
+                top={vh * 0.7}
                 width={vw * 0.941}
                 p={3}
                 m={3}
+                onPress={() =>
+                    navigation.navigate("OrderTab", {
+                        screen: "ORDERDETAILS",
+                        params: { id: route.params.id },
+                    })
+                }
             >
                 Buy Now | 500 TK
             </Button>
-        </SafeAreaView>
+        </Box>
     );
 };
 

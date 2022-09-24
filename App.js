@@ -14,6 +14,7 @@ import {
     View,
     Flex,
     Pressable,
+    Button,
 } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -42,75 +43,107 @@ import HistoryPage from "./src/pages/History";
 import AllUsers from "./src/pages/AllUsers";
 import ManageUser from "./src/pages/ManageUser";
 import { useDimensions } from "./src/utils";
+import { NavHeader } from "./src/components/NavHeader";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const NavHeader = (props) => {
-    const [vh, vw] = useDimensions();
-
-    return (
-        <Flex direction="row">
-            <Pressable onPress={() => console.log("im pressed")}>
-                <AntDesign name="left" size={24} color="black" />
-            </Pressable>
-            <Flex flex={0.96} alignItems="center">
-                <Text fontWeight="bold" fontSize="16">
-                    {props.children}
-                </Text>
-            </Flex>
-        </Flex>
-    );
-};
-
-const Home = () => {
+const HomeStack = () => {
     return (
         <Stack.Navigator
             screenOptions={{
-                headerShown: false,
+                headerShown: true,
+                headerStyle: {
+                    backgroundColor: colors.primary[300],
+                },
+                headerTintColor: "#fff",
             }}
         >
-            {/* Common Screens STARTS */}
-            <Stack.Screen name="Home" component={HomePage} />
-            <Stack.Screen name="Auth" component={AuthPage} />
-            <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="OTP" component={OTPPage} />
             <Stack.Screen
-                name="REGISTRATION_SUCCESS"
-                component={RegistrationSuccess}
+                options={{ headerShown: false }}
+                name="DASHBOARD"
+                component={DashboardPage}
             />
-            <Stack.Screen name="DASHBOARD" component={DashboardPage} />
-
-            {/* Common Screens STARTS */}
-
-            {/* Rentor Screens STARTS */}
             <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
-            <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
-            <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
-            <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} />
-            {/* Rentor Screens ENDS */}
-
-            {/* Provider Screens STARTS */}
-            <Stack.Screen name="DRESSADD" component={DressAdd} />
-            <Stack.Screen
-                name="DRESSADDCOMPLETE"
-                component={DressAddComplete}
-            />
-            <Stack.Screen name="ONRENT" component={OnRent} />
-            <Stack.Screen name="DRESSALL" component={DressAll} />
-            <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
-            <Stack.Screen name="HISTORY" component={HistoryPage} />
-            {/* Provider Screens ENDS */}
-
-            {/* Admin Screens STARTS */}
-            <Stack.Screen name="ALLUSERS" component={AllUsers} />
-            <Stack.Screen name="MANAGEUSER" component={ManageUser} />
-            {/* Admin Screens ENDS */}
         </Stack.Navigator>
     );
 };
 
-const Chat = () => {
+const Tabs = () => {
+    return (
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    let iconLib;
+                    if (route.name === "HomeTab") {
+                        iconName = "home";
+                        iconLib = "ionicons";
+                    } else if (route.name === "ChatTab") {
+                        iconName = "chatbox-ellipses";
+                        iconLib = "ionicons";
+                    } else if (route.name === "OrderTab") {
+                        iconName = "shopping-bag";
+                        iconLib = "entypo";
+                    } else if (route.name === "ProfileTab") {
+                        iconName = "user";
+                        iconLib = "fontAwesome";
+                    }
+
+                    // You can return any component that you like here!
+                    if (iconLib === "ionicons") {
+                        return (
+                            <Ionicons
+                                name={iconName}
+                                size={size}
+                                color={color}
+                            />
+                        );
+                    } else if (iconLib === "entypo") {
+                        return (
+                            <Entypo name={iconName} size={size} color={color} />
+                        );
+                    } else {
+                        return (
+                            <FontAwesome
+                                name={iconName}
+                                size={size}
+                                color={color}
+                            />
+                        );
+                    }
+                },
+                tabBarActiveTintColor: colors.primary[300],
+                tabBarInactiveTintColor: "gray",
+                headerShown: false,
+            })}
+        >
+            <Tab.Screen
+                options={{ title: "Home" }}
+                name="HomeTab"
+                component={HomeStack}
+            />
+            <Tab.Screen
+                options={{ title: "Shop" }}
+                name="OrderTab"
+                component={OrderStack}
+            />
+            <Tab.Screen
+                options={{ title: "Chat" }}
+                name="ChatTab"
+                component={ChatStack}
+            />
+
+            <Tab.Screen
+                options={{ title: "Profile" }}
+                name="ProfileTab"
+                component={ProfileStack}
+            />
+        </Tab.Navigator>
+    );
+};
+
+const ChatStack = () => {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -129,7 +162,7 @@ const Chat = () => {
     );
 };
 
-const Order = () => {
+const ProfileStack = () => {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -139,11 +172,49 @@ const Order = () => {
                 headerTintColor: "#fff",
             }}
         >
+            <Stack.Screen
+                name="HISTORY"
+                options={{ headerTitle: (props) => <NavHeader {...props} /> }}
+                component={HistoryPage}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const OrderStack = () => {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: colors.primary[300],
+                },
+                headerTintColor: "#fff",
+            }}
+            initialRouteName="SEARCH"
+        >
+            {/* Rentor Screens STARTS */}
             <Stack.Screen name="SEARCH" component={SearchPage} />
             <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
             <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
             <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
             <Stack.Screen name="ORDERCONFIRM" component={OrderConfirmPage} />
+            {/* Rentor Screens ENDS */}
+
+            {/* Provider Screens STARTS */}
+            <Stack.Screen name="DRESSADD" component={DressAdd} />
+            <Stack.Screen
+                name="DRESSADDCOMPLETE"
+                component={DressAddComplete}
+            />
+            <Stack.Screen name="ONRENT" component={OnRent} />
+            <Stack.Screen name="DRESSALL" component={DressAll} />
+            <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
+            {/* Provider Screens ENDS */}
+
+            {/* Admin Screens STARTS */}
+            <Stack.Screen name="ALLUSERS" component={AllUsers} />
+            <Stack.Screen name="MANAGEUSER" component={ManageUser} />
+            {/* Admin Screens ENDS */}
         </Stack.Navigator>
     );
 };
@@ -162,78 +233,22 @@ export default function App() {
         <NativeBaseProvider theme={theme}>
             <View style={{ flex: 1, backgroundColor: "#000000" }}>
                 <NavigationContainer>
-                    <Tab.Navigator
-                        screenOptions={({ route }) => ({
-                            tabBarIcon: ({ focused, color, size }) => {
-                                let iconName;
-                                let iconLib;
-                                if (route.name === "HomeTab") {
-                                    iconName = "home";
-                                    iconLib = "ionicons";
-                                } else if (route.name === "ChatTab") {
-                                    iconName = "chatbox-ellipses";
-                                    iconLib = "ionicons";
-                                } else if (route.name === "ShopTab") {
-                                    iconName = "shopping-bag";
-                                    iconLib = "entypo";
-                                } else if (route.name === "ProfileTab") {
-                                    iconName = "user";
-                                    iconLib = "fontAwesome";
-                                }
-
-                                // You can return any component that you like here!
-                                if (iconLib === "ionicons") {
-                                    return (
-                                        <Ionicons
-                                            name={iconName}
-                                            size={size}
-                                            color={color}
-                                        />
-                                    );
-                                } else if (iconLib === "entypo") {
-                                    return (
-                                        <Entypo
-                                            name={iconName}
-                                            size={size}
-                                            color={color}
-                                        />
-                                    );
-                                } else {
-                                    return (
-                                        <FontAwesome
-                                            name={iconName}
-                                            size={size}
-                                            color={color}
-                                        />
-                                    );
-                                }
-                            },
-                            tabBarActiveTintColor: colors.primary[300],
-                            tabBarInactiveTintColor: "gray",
+                    <Stack.Navigator
+                        screenOptions={{
                             headerShown: false,
-                        })}
+                        }}
                     >
-                        <Tab.Screen
-                            options={{ title: "Home" }}
-                            name="HomeTab"
-                            component={Home}
+                        {/* Common Screens STARTS */}
+                        <Stack.Screen name="Home" component={HomePage} />
+                        <Stack.Screen name="Auth" component={AuthPage} />
+                        <Stack.Screen name="SignUp" component={SignUp} />
+                        <Stack.Screen name="OTP" component={OTPPage} />
+                        <Stack.Screen
+                            name="REGISTRATION_SUCCESS"
+                            component={RegistrationSuccess}
                         />
-                        <Tab.Screen
-                            options={{ title: "Chat" }}
-                            name="ChatTab"
-                            component={Chat}
-                        />
-                        <Tab.Screen
-                            options={{ title: "Shop" }}
-                            name="ShopTab"
-                            component={Order}
-                        />
-                        <Tab.Screen
-                            options={{ title: "Profile" }}
-                            name="ProfileTab"
-                            component={Home}
-                        />
-                    </Tab.Navigator>
+                        <Stack.Screen name="TABS" component={Tabs} />
+                    </Stack.Navigator>
                 </NavigationContainer>
             </View>
         </NativeBaseProvider>

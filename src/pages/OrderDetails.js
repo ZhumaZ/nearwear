@@ -7,19 +7,19 @@ import {
     Row,
     TextArea,
     ScrollView,
+    Box,
 } from "native-base";
-import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDimensions } from "../utils";
 import { colors } from "../theme";
 
-const OrderDetailsPage = () => {
+const OrderDetailsPage = ({ route, navigation }) => {
     const [formData, setData] = React.useState({});
     const [showDatePicker, setShowDatePicker] = React.useState(false);
     const [vh, vw] = useDimensions();
     return (
-        <SafeAreaView>
-            <ScrollView>
+        <Box>
+            <ScrollView minHeight={vh}>
                 <VStack width="90%" mx="3" maxW="300px">
                     <FormControl isRequired width={vw * 0.94}>
                         <FormControl.Label
@@ -201,15 +201,20 @@ const OrderDetailsPage = () => {
                 </VStack>
             </ScrollView>
             <Button
+                zIndex={100}
                 bgColor={colors.primary[300]}
                 position="absolute"
                 width={vw * 0.94}
-                mx={3}
-                top={vh * 0.8}
+                p={3}
+                m={3}
+                top={vh * 0.7}
+                onPress={() =>
+                    navigation.navigate("ORDERSUMMARY", { data: formData })
+                }
             >
                 Proceed
             </Button>
-        </SafeAreaView>
+        </Box>
     );
 };
 

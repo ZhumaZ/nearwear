@@ -14,16 +14,15 @@ import Card from "../components/Card";
 import { useDimensions } from "../utils";
 import { colors } from "../theme";
 
-const OrderSummaryPage = () => {
+const OrderSummaryPage = ({ route, navigation }) => {
     const [value, setValue] = React.useState("bkash");
     const [vh, vw] = useDimensions();
 
     return (
-        <SafeAreaView>
-            <ScrollView mb={10}>
-                <Flex alignItems="center">
-                    <Card width="full" height={vh * 0.45} height2="77%" />
-                </Flex>
+        <Box>
+            <ScrollView>
+                <Card width="full" height={vh * 0.45} height2="77%" />
+
                 <Box p={3}>
                     <Text>Full Name: Tania Aktar</Text>
                     <Text>Email Address: tania.aktar.cse@ulab.edu.bd</Text>
@@ -79,12 +78,16 @@ const OrderSummaryPage = () => {
                 bgColor={colors.primary[300]}
                 position="absolute"
                 width={vw * 0.94}
-                mx={3}
-                top={vh * 0.85}
+                m={3}
+                p={3}
+                top={vh * 0.7}
+                onPress={() =>
+                    navigation.navigate("ORDERCONFIRM", { payVia: value })
+                }
             >
                 Confirm Order
             </Button>
-        </SafeAreaView>
+        </Box>
     );
 };
 

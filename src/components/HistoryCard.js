@@ -43,6 +43,7 @@ const HistoryCard = (props) => {
                         px={3}
                         mt={0.5}
                         bgColor={colors.primary[300]}
+                        onPress={props.onPress}
                     >
                         View
                     </Button>

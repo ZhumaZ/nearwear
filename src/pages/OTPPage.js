@@ -31,7 +31,13 @@ const OTPPage = ({ route, navigation }) => {
                     //         Authorization: `Bearer ${route.params.token}`,
                     //     },
                     // });
-                    navigation.navigate("DASHBOARD", { type: "rentor" });
+                    navigation.navigate("TABS", {
+                        screen: "HomeTab",
+                        params: {
+                            screen: "DASHBOARD",
+                            params: { type: "rentor" },
+                        },
+                    });
                 }}
             />
             <Text>Invalid OTP</Text>
