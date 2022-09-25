@@ -5,7 +5,7 @@ import { Box, Flex, Text, Spacer, Center, Button } from "native-base";
 import { Entypo } from "@expo/vector-icons";
 import { colors } from "../theme";
 import { useDimensions } from "../utils";
-const DressAddComplete = () => {
+const DressAddComplete = ({ route, navigation }) => {
     const [vh, vw] = useDimensions();
 
     return (
@@ -30,7 +30,11 @@ const DressAddComplete = () => {
                             for using NearWear
                         </Text>
                     </Flex>
-                    <Button bgColor={colors.primary[300]} my={3}>
+                    <Button
+                        bgColor={colors.primary[300]}
+                        my={3}
+                        onPress={() => navigation.navigate("SEARCH")}
+                    >
                         My Dresses
                     </Button>
                 </Box>

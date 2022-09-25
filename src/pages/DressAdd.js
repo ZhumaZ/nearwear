@@ -23,7 +23,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useDimensions } from "../utils";
 import { colors } from "../theme";
 
-const DressAdd = () => {
+const DressAdd = ({ route, navigation }) => {
     const [formData, setData] = useState({});
     const [vh, vw] = useDimensions();
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -291,7 +291,11 @@ const DressAdd = () => {
                         Error Name
                     </FormControl.ErrorMessage>
                 </FormControl>
-                <Button bgColor={colors.primary[300]} width={vw * 0.94}>
+                <Button
+                    bgColor={colors.primary[300]}
+                    width={vw * 0.94}
+                    onPress={() => navigation.navigate("DRESSADDCOMPLETE")}
+                >
                     Submit
                 </Button>
             </VStack>

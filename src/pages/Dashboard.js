@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native";
 import {
     Avatar,
     Box,
@@ -58,7 +57,10 @@ const DashboardPage = ({ route, navigation }) => {
 
     const handleSearch = (value) => {
         console.log("Searched for: ", value);
-        navigation.navigate("ShopTab", { searchTerm: value });
+        navigation.navigate("OrderTab", {
+            screen: "SEARCH",
+            params: { searchTerm: value },
+        });
     };
 
     console.log(route.params);
@@ -138,7 +140,14 @@ const DashboardPage = ({ route, navigation }) => {
                     )}
                     {provider ? (
                         <Flex direction="row" flexWrap="wrap">
-                            <TouchableOpacity>
+                            <Pressable
+                                onPress={() =>
+                                    navigation.navigate("OrderTab", {
+                                        screen: "SEARCH",
+                                        params: { forwardTo: "DRESSADD" },
+                                    })
+                                }
+                            >
                                 <Center
                                     width={vw * 0.46}
                                     height={vh * 0.3}
@@ -154,9 +163,16 @@ const DashboardPage = ({ route, navigation }) => {
                                     />
                                     <Text>Add Dress</Text>
                                 </Center>
-                            </TouchableOpacity>
+                            </Pressable>
 
-                            <TouchableOpacity>
+                            <Pressable
+                                onPress={() =>
+                                    navigation.navigate("OrderTab", {
+                                        screen: "SEARCH",
+                                        params: { forwardTo: "ONRENT" },
+                                    })
+                                }
+                            >
                                 <Center
                                     width={vw * 0.46}
                                     height={vh * 0.3}
@@ -170,8 +186,14 @@ const DashboardPage = ({ route, navigation }) => {
                                     />
                                     <Text>On Rent</Text>
                                 </Center>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
+                            </Pressable>
+                            <Pressable
+                                onPress={() =>
+                                    navigation.navigate("OrderTab", {
+                                        screen: "SEARCH",
+                                    })
+                                }
+                            >
                                 <Center
                                     width={vw * 0.46}
                                     height={vh * 0.3}
@@ -186,8 +208,14 @@ const DashboardPage = ({ route, navigation }) => {
                                     />
                                     <Text>All Dresses</Text>
                                 </Center>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
+                            </Pressable>
+                            <Pressable
+                                onPress={() =>
+                                    navigation.navigate("ProfileTab", {
+                                        screen: "HISTORY",
+                                    })
+                                }
+                            >
                                 <Center
                                     width={vw * 0.46}
                                     height={vh * 0.3}
@@ -201,7 +229,7 @@ const DashboardPage = ({ route, navigation }) => {
                                     />
                                     <Text>History</Text>
                                 </Center>
-                            </TouchableOpacity>
+                            </Pressable>
                         </Flex>
                     ) : rentor ? (
                         <CardList onPress={handleProductPress} />

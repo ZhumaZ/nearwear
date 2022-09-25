@@ -193,7 +193,11 @@ const OrderStack = () => {
             initialRouteName="SEARCH"
         >
             {/* Rentor Screens STARTS */}
-            <Stack.Screen name="SEARCH" component={SearchPage} />
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="SEARCH"
+                component={SearchPage}
+            />
             <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
             <Stack.Screen name="ORDERDETAILS" component={OrderDetailsPage} />
             <Stack.Screen name="ORDERSUMMARY" component={OrderSummaryPage} />
@@ -201,14 +205,14 @@ const OrderStack = () => {
             {/* Rentor Screens ENDS */}
 
             {/* Provider Screens STARTS */}
+            <Stack.Screen name="ONRENT" component={OnRent} />
+            <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
             <Stack.Screen name="DRESSADD" component={DressAdd} />
             <Stack.Screen
                 name="DRESSADDCOMPLETE"
                 component={DressAddComplete}
             />
-            <Stack.Screen name="ONRENT" component={OnRent} />
-            <Stack.Screen name="DRESSALL" component={DressAll} />
-            <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
+
             {/* Provider Screens ENDS */}
 
             {/* Admin Screens STARTS */}
