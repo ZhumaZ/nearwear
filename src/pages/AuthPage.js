@@ -24,11 +24,15 @@ const AuthPage = ({ navigation }) => {
     const windowHeight = Dimensions.get("window").height;
 
     const [formData, setFormData] = useState({});
-    const [{ data, error }, refetch] = useAxios({}, { manual: true });
+    const [firstCall, setFirstCall] = useState(true);
+    const [{ data, loading, error }, refetch] = useAxios();
 
     useEffect(() => {
         if (data && !error) {
-            navigation.navigate("OTP", { token: data?.token });
+            navigation.navigate("OTP", {
+                token: data?.token,
+                phone: data?.phone,
+            });
         }
     }, [data, error]);
 
@@ -95,7 +99,10 @@ const AuthPage = ({ navigation }) => {
                         </Flex>
                         <Box alignItems="center">
                             <Box w="150%">
-                                <FormControl isRequired isInvalid={!!error}>
+                                <FormControl
+                                    isRequired
+                                    isInvalid={!firstCall && !!error}
+                                >
                                     <Stack mx="4">
                                         <FormControl.Label>
                                             Phone Number
@@ -116,7 +123,10 @@ const AuthPage = ({ navigation }) => {
                                         </FormControl.HelperText>
                                     </Stack>
                                 </FormControl>
-                                <FormControl isRequired isInvalid={!!error}>
+                                <FormControl
+                                    isRequired
+                                    isInvalid={!firstCall && !!error}
+                                >
                                     <Stack mx="4">
                                         <FormControl.Label>
                                             Password
@@ -145,22 +155,25 @@ const AuthPage = ({ navigation }) => {
                                     </Stack>
                                 </FormControl>
                                 <Button
+                                    isLoading={loading}
                                     mt={5}
                                     bgColor="primary.300"
                                     padding={5}
                                     onPress={(e) => {
                                         console.log(formData);
-                                        // refetch({
-                                        //     method: "POST",
-                                        //     url: env.BASE_URL + "/login",
-                                        //     data: {
-                                        //         phone: formData.phone,
-                                        //         password: formData.password,
-                                        //     },
-                                        // });
-                                        navigation.navigate("OTP", {
-                                            token: "dasdadaasasa",
+
+                                        refetch({
+                                            method: "POST",
+                                            url: env.BASE_URL + "/login",
+                                            data: {
+                                                phone: formData.phone,
+                                                password: formData.password,
+                                            },
                                         });
+                                        setFirstCall(false);
+                                        // navigation.navigate("OTP", {
+                                        //     token: "dasdadaasasa",
+                                        // });
                                     }}
                                 >
                                     <Text>Login</Text>

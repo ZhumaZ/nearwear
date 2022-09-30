@@ -21,6 +21,7 @@
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "^6.0.11",
     "@react-navigation/native-stack": "^6.7.0",
+    "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
     "axios-hooks": "^3.1.4",
     "expo": "^44.0.0",
@@ -39,7 +40,10 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "12.1.1",
     "react-native-svg-charts": "^5.4.0",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "react-redux": "^8.0.4",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

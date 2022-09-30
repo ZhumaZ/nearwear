@@ -5,7 +5,7 @@ import { Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "../theme";
 import { Entypo } from "@expo/vector-icons";
-
+import { useSelector } from "react-redux";
 const HomePage = ({ navigation }) => {
     const windowWidth = Dimensions.get("window").width;
     const windowHeight = Dimensions.get("window").height;
