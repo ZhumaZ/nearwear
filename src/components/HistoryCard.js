@@ -10,13 +10,13 @@ const HistoryCard = (props) => {
             borderRadius={5}
             bgColor="#fff"
             mb={1}
-            onPress={props.onPress}
+            onPress={() => props.onPress(props.dressId, props.deliveryAddress)}
         >
             <Flex direction="row" height={16} justifyContent="space-between">
                 <Flex direction="row" justifyContent="center">
                     <Image
                         source={{
-                            uri: "https://i.ibb.co/jMhzGZB/sharee.jpg",
+                            uri: props.image,
                         }}
                         alt="Sharee"
                         width={16}
@@ -26,17 +26,16 @@ const HistoryCard = (props) => {
                     />
                     <Flex ml={2} alignItems="flex-start">
                         <Text fontWeight="bold" fontSize={13}>
-                            Silk Sharee
+                            {props.title}
                         </Text>
                         <AirbnbRating size={7} showRating={false} />
-                        <Text fontSize={10}>Description goes here,,,</Text>
-                        <Text fontSize={10}>Description goes here,,,</Text>
+                        <Text fontSize={10}>Order ID: {props.id}</Text>
                     </Flex>
                 </Flex>
 
                 <Flex mr={2} justifyContent="center">
                     <Text textAlign="center" fontWeight="bold">
-                        300 TK
+                        {props.total} TK
                     </Text>
                     <Button
                         py={0.5}

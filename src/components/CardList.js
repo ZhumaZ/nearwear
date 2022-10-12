@@ -3,12 +3,17 @@ import Card from "./Card";
 import { Flex } from "native-base";
 
 const CardList = (props) => {
-    const cards = [1, 2, 3, 4, 5, 6, 7, 8];
-
     return (
         <Flex direction="row" flexWrap="wrap" justifyContent="space-between">
-            {cards.map((card) => (
-                <Card onPress={props.onPress} id={card} key={card} />
+            {props.data?.map((card) => (
+                <Card
+                    onPress={props.onPress}
+                    id={card._id}
+                    key={card._id}
+                    image={card.image}
+                    title={card.title}
+                    price={card.price}
+                />
             ))}
         </Flex>
     );

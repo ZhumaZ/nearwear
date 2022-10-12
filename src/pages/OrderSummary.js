@@ -13,33 +13,79 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Card from "../components/Card";
 import { useDimensions } from "../utils";
 import { colors } from "../theme";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { env } from "../../env";
 
 const OrderSummaryPage = ({ route, navigation }) => {
     const [value, setValue] = React.useState("bkash");
     const [vh, vw] = useDimensions();
+    const user = useSelector((state) => state.user);
+
+    const handleOrder = async () => {
+        console.log("running");
+        const response = await axios.put(
+            `${env.BASE_URL}/order`,
+            {
+                userId: user.phone,
+                dressId: route.params.dress?._id,
+                dressTitle: route.params.dress?.title,
+                dressImage: route.params.dress?.image,
+                total: route.params.dress?.price,
+                status: "pending",
+                paymentMethod: value,
+                deliveryAddress: route.params.data.address,
+                orderedAt: Date.now().toString(),
+            },
+            {
+                headers: {
+                    Authorization: "Bearer " + user.token,
+                },
+            }
+        );
+
+        console.log(response);
+
+        if (response.status === 200) {
+            navigation.navigate("ORDERCONFIRM", {
+                payVia: value,
+                dressId: route.params.dress?._id,
+                address: route.params.data.address,
+            });
+        }
+    };
 
     return (
-        <Box>
+        <Box mb={5}>
             <ScrollView>
-                <Card width="full" height={vh * 0.45} height2="77%" />
+                <Card
+                    width="full"
+                    height={vh * 0.45}
+                    height2="77%"
+                    onPress={() => {}}
+                    id={route.params.dress?._id}
+                    key={route.params.dress?._id}
+                    image={route.params.dress?.image}
+                    title={route.params.dress?.title}
+                    price={route.params.dress?.price}
+                />
 
                 <Box p={3}>
-                    <Text>Full Name: Tania Aktar</Text>
-                    <Text>Email Address: tania.aktar.cse@ulab.edu.bd</Text>
-                    <Text>Phone: +880 1553835434</Text>
-                    <Text>Delivery Address: Dhanmondi, Dhaka</Text>
-                    <Text>From: 3/3/3333</Text>
-                    <Text>From: 4/4/4444</Text>
+                    <Text>Phone: {user.phone}</Text>
+                    <Text>Delivery Address: {route.params.data.address}</Text>
+                    <Text>Duration: {route.params.dress?.time} Days</Text>
                 </Box>
                 <Spacer />
                 <Box p={3}>
                     <Flex direction="row" justifyContent="space-between">
                         <Box>
-                            <Text>Silk Sharee</Text>
+                            <Text>{route.params.dress?.title}</Text>
                             <Text>Delivery Fees</Text>
                         </Box>
                         <Box>
-                            <Text textAlign="right">1 x 500</Text>
+                            <Text textAlign="right">
+                                1 x {route.params.dress?.price}
+                            </Text>
                             <Text textAlign="right">50</Text>
                         </Box>
                     </Flex>
@@ -49,7 +95,9 @@ const OrderSummaryPage = ({ route, navigation }) => {
                             <Text fontWeight="bold">Total</Text>
                         </Box>
                         <Box>
-                            <Text fontWeight="bold">550</Text>
+                            <Text fontWeight="bold">
+                                {parseInt(route.params.dress?.price) + 50}
+                            </Text>
                         </Box>
                     </Flex>
                     <Center my={10}>
@@ -81,9 +129,7 @@ const OrderSummaryPage = ({ route, navigation }) => {
                 m={3}
                 p={3}
                 top={vh * 0.7}
-                onPress={() =>
-                    navigation.navigate("ORDERCONFIRM", { payVia: value })
-                }
+                onPress={handleOrder}
             >
                 Confirm Order
             </Button>

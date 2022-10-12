@@ -4,7 +4,7 @@ import { colors } from "../theme";
 import { AirbnbRating } from "react-native-ratings";
 import { useDimensions } from "../utils";
 
-const ProductSingleCard = () => {
+const ProductSingleCard = (props) => {
     const [vh, vw] = useDimensions();
 
     return (
@@ -22,14 +22,14 @@ const ProductSingleCard = () => {
                     p={2}
                     borderTopRightRadius={50}
                 >
-                    Silk Sharee
+                    {props.title}
                 </Box>
                 <AirbnbRating size={10} showRating={false} />
             </Flex>
 
             <Image
                 source={{
-                    uri: "https://i.ibb.co/jMhzGZB/sharee.jpg",
+                    uri: props.image,
                 }}
                 alt="Sharee"
                 width="full"

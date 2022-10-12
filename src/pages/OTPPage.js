@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import OTPInput from "react-native-otp-forminput";
 import { Text } from "native-base";
@@ -9,29 +9,37 @@ import { signIn } from "../actions/user";
 
 const OTPPage = ({ route, navigation }) => {
     const [{ data, error }, refetch] = useAxios();
-    const [{ userData, userError }, refetchUser] = useAxios();
-
+    const [routed, setRouted] = useState(false);
+    const dispatch = useDispatch();
     useEffect(() => {
-        if (data && !error) {
-            refetchUser({
+        if (data && data.token && !error && !routed) {
+            refetch({
                 method: "GET",
-                url: env.BASE_URL + `/user?phone=${data.phone}`,
+                url: env.BASE_URL + "/user",
                 headers: {
                     Authorization: `Bearer ${route.params.token}`,
                 },
+                params: {
+                    phone: data.phone,
+                },
+            });
+        } else if (data && data.role && !error && !routed) {
+            dispatch(
+                signIn({
+                    phone: data._id,
+                    token: route.params.token,
+                    otpVerified: true,
+                    type: data.role,
+                })
+            );
+            setRouted(true);
+            navigation.navigate("TABS", {
+                screen: "HomeTab",
+                params: { screen: "DASHBOARD", params: { type: data.role } },
             });
         }
     }, [data, error]);
-    console.log(data);
-    useEffect(() => {
-        if (userData && !userError) {
-            navigation.navigate("TABS", {
-                screen: "DASHBOARD",
-                params: { type: userData.role },
-            });
-        }
-    }, [userData, userError]);
-    console.log(userData, userError);
+
     return (
         <>
             <OTPInput
@@ -40,16 +48,18 @@ const OTPPage = ({ route, navigation }) => {
                 title="Enter OTP"
                 type="outline"
                 onFilledCode={(code) => {
-                    refetch({
-                        method: "POST",
-                        url: env.BASE_URL + "/verify",
-                        data: {
-                            otp: code,
-                        },
-                        headers: {
-                            Authorization: `Bearer ${route.params.token}`,
-                        },
-                    });
+                    if (!routed) {
+                        refetch({
+                            method: "POST",
+                            url: env.BASE_URL + "/verify",
+                            data: {
+                                otp: code,
+                            },
+                            headers: {
+                                Authorization: `Bearer ${route.params.token}`,
+                            },
+                        });
+                    }
                 }}
             />
             <Text>Invalid OTP</Text>

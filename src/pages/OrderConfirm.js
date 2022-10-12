@@ -33,14 +33,9 @@ const OrderConfirmPage = ({ route, navigation }) => {
                         <Button
                             flex={1}
                             bgColor={colors.primary[300]}
-                            onPress={() =>
-                                navigation.navigate("HomeTab", {
-                                    screen: "DASHBOARD",
-                                    params: { type: "rentor" },
-                                })
-                            }
+                            onPress={() => navigation.navigate("SEARCH")}
                         >
-                            Dashboard
+                            Back to Shopping
                         </Button>
                         <Box mr={1}></Box>
                         <Button

@@ -8,14 +8,13 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case SIGN_IN:
+            console.log("hereererererer", state, action.payload);
             return {
-                ...state,
-                user: action.payload,
+                ...action.payload,
             };
         case SIGN_OUT:
             return {
-                ...state,
-                user: initialState,
+                ...initialState,
             };
         default:
             return state;

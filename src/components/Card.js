@@ -27,7 +27,7 @@ const Card = (props) => {
                 >
                     <Image
                         source={{
-                            uri: "https://i.ibb.co/jMhzGZB/sharee.jpg",
+                            uri: props.image,
                         }}
                         alt="Sharee"
                         width="full"
@@ -38,13 +38,13 @@ const Card = (props) => {
                 </Box>
 
                 <Flex direction="row" p={2} justifyContent="space-between">
-                    <Text color={colors.primary[300]}>Silk Sharee</Text>
+                    <Text color={colors.primary[300]}>{props.title}</Text>
                     <Box mt={1} ml={3}>
                         <AirbnbRating size={10} showRating={false} />
                     </Box>
                 </Flex>
                 <Text color={colors.primary[300]} px={2}>
-                    500 TK
+                    {props.price} TK
                 </Text>
             </Pressable>
         </Box>

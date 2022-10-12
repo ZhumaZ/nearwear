@@ -22,14 +22,17 @@ import { colors } from "../theme";
 import { useDimensions } from "../utils";
 import OrderCard from "../components/OrderCard";
 import OrderCardList from "../components/OrderCardList";
+import { useSelector } from "react-redux";
 
 const DashboardPage = ({ route, navigation }) => {
     const [vh, vw] = useDimensions();
     const [activeOrderBar, setActiveOrderBar] = useState("all");
-
+    console.log("route", route.params);
     const rentor = route.params.type === "rentor" ? true : false;
     const provider = route.params.type === "provider" ? true : false;
     const admin = route.params.type === "admin" ? true : false;
+
+    const user = useSelector((state) => state.user);
 
     // Admin click handlers
     const handleActiveOrderBar = (value) => {
@@ -141,12 +144,7 @@ const DashboardPage = ({ route, navigation }) => {
                     {provider ? (
                         <Flex direction="row" flexWrap="wrap">
                             <Pressable
-                                onPress={() =>
-                                    navigation.navigate("OrderTab", {
-                                        screen: "SEARCH",
-                                        params: { forwardTo: "DRESSADD" },
-                                    })
-                                }
+                                onPress={() => navigation.navigate("DRESSADD")}
                             >
                                 <Center
                                     width={vw * 0.46}
@@ -166,12 +164,7 @@ const DashboardPage = ({ route, navigation }) => {
                             </Pressable>
 
                             <Pressable
-                                onPress={() =>
-                                    navigation.navigate("OrderTab", {
-                                        screen: "SEARCH",
-                                        params: { forwardTo: "ONRENT" },
-                                    })
-                                }
+                                onPress={() => navigation.navigate("ONRENT")}
                             >
                                 <Center
                                     width={vw * 0.46}
@@ -188,11 +181,7 @@ const DashboardPage = ({ route, navigation }) => {
                                 </Center>
                             </Pressable>
                             <Pressable
-                                onPress={() =>
-                                    navigation.navigate("OrderTab", {
-                                        screen: "SEARCH",
-                                    })
-                                }
+                                onPress={() => navigation.navigate("SEARCH")}
                             >
                                 <Center
                                     width={vw * 0.46}

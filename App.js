@@ -64,6 +64,18 @@ const HomeStack = () => {
                 name="DASHBOARD"
                 component={DashboardPage}
             />
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="SEARCH"
+                component={SearchPage}
+            />
+            <Stack.Screen name="ONRENT" component={OnRent} />
+            <Stack.Screen name="DRESSSINGLE" component={DressSingle} />
+            <Stack.Screen name="DRESSADD" component={DressAdd} />
+            <Stack.Screen
+                name="DRESSADDCOMPLETE"
+                component={DressAddComplete}
+            />
             <Stack.Screen name="PRODUCTSINGLE" component={ProductSingle} />
         </Stack.Navigator>
     );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "../components/Search";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -18,20 +18,67 @@ import { colors } from "../theme";
 import HistoryCard from "../components/HistoryCard";
 import ProductSingleCard from "../components/ProductSingleCard";
 import ReviewList from "../components/ReviewList";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { env } from "../../env";
+
 const HistoryPage = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [historyModalVisible, setHistoryModalVisible] = useState(false);
-    const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const [orders, setOrders] = useState([]);
+    const [selectedDress, setSelectedDress] = useState(null);
+    const user = useSelector((state) => state.user);
 
-    const handleSingleHistoryClick = () => {
+    const handleSingleHistoryClick = async (dressId, deliveryAddress) => {
+        const response = await axios.get(`${env.BASE_URL}/dress`, {
+            params: {
+                _id: dressId,
+            },
+            headers: {
+                Authorization: "Bearer " + user.token,
+            },
+        });
+
+        if (response.status === 200) {
+            setSelectedDress({ ...response.data, deliveryAddress });
+        }
         setHistoryModalVisible(true);
     };
 
     const renderHistoryCards = () => {
-        return data.map((item) => (
-            <HistoryCard key={item} onPress={handleSingleHistoryClick} />
+        return orders.map((order) => (
+            <HistoryCard
+                key={order._id}
+                id={order._id}
+                dressId={order.dressId}
+                image={order.dressImage}
+                title={order.dressTitle}
+                total={order.total}
+                deliveryAddress={order.deliveryAddress}
+                onPress={handleSingleHistoryClick}
+            />
         ));
     };
+
+    const fetchData = async () => {
+        const response = await axios.get(`${env.BASE_URL}/orders`, {
+            params: {
+                userId: user.phone,
+            },
+            headers: {
+                Authorization: "Bearer " + user.token,
+            },
+        });
+
+        if (response.status === 200) {
+            setOrders(response.data);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <ScrollView>
             <SafeAreaView>
@@ -92,7 +139,10 @@ const HistoryPage = () => {
                     <Modal.Content>
                         <Modal.CloseButton />
                         <Modal.Body bgColor="red">
-                            <ProductSingleCard />
+                            <ProductSingleCard
+                                title={selectedDress?.title}
+                                image={selectedDress?.image}
+                            />
                             <Box p={3}>
                                 <Flex>
                                     <Text
@@ -101,14 +151,7 @@ const HistoryPage = () => {
                                         flex={1}
                                         my={5}
                                     >
-                                        Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit. Pellentesque viverra
-                                        ornare eleifend. Nam eget consectetur
-                                        ipsum. Nam eu urna rutrum, ullamcorper
-                                        urna ut, aliquet nisi. Morbi sagittis,
-                                        tellus vitae varius tristique, arcu
-                                        metus vestibulum arcu, sed hendrerit
-                                        massa nunc at metus.
+                                        {selectedDress?.description}
                                     </Text>
                                     <Flex
                                         direction="row"
@@ -126,10 +169,14 @@ const HistoryPage = () => {
                                         </Box>
                                         <Box width={5}></Box>
                                         <Box>
-                                            <Text>300 TK</Text>
-                                            <Text>5</Text>
-                                            <Text>Dhanmondi</Text>
-                                            <Text>On Rent</Text>
+                                            <Text>
+                                                {selectedDress?.price} TK
+                                            </Text>
+                                            <Text>{selectedDress?.time}</Text>
+                                            <Text>
+                                                {selectedDress?.deliveryAddress}
+                                            </Text>
+                                            <Text>{selectedDress?.status}</Text>
                                         </Box>
                                     </Flex>
                                 </Flex>
@@ -157,17 +204,13 @@ const HistoryPage = () => {
                                 <Text fontWeight="bold"> Filter</Text>
                             </Flex>
                         </Pressable>
-                        <Box pb={3}>{renderHistoryCards()}</Box>
+                        <Box pb={3}>
+                            <Button mb={1} onPress={fetchData}>
+                                Refresh
+                            </Button>
+                            {renderHistoryCards()}
+                        </Box>
                     </Box>
-                    <Center>
-                        <Button
-                            bgColor={colors.primary[300]}
-                            isLoading
-                            isLoadingText="Loading..."
-                        >
-                            Show More
-                        </Button>
-                    </Center>
                 </Box>
             </SafeAreaView>
         </ScrollView>
