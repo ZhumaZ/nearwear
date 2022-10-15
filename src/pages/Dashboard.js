@@ -142,12 +142,12 @@ const DashboardPage = ({ route, navigation }) => {
                         <></>
                     )}
                     {provider ? (
-                        <Flex direction="row" flexWrap="wrap">
+                        <Flex direction="row" flexWrap="wrap" justifyContent="space-around">
                             <Pressable
                                 onPress={() => navigation.navigate("DRESSADD")}
                             >
                                 <Center
-                                    width={vw * 0.46}
+                                    width={vw * 0.45}
                                     height={vh * 0.3}
                                     bgColor={colors.primary[300]}
                                     borderRadius={5}
@@ -167,7 +167,7 @@ const DashboardPage = ({ route, navigation }) => {
                                 onPress={() => navigation.navigate("ONRENT")}
                             >
                                 <Center
-                                    width={vw * 0.46}
+                                    width={vw * 0.45}
                                     height={vh * 0.3}
                                     bgColor={colors.primary[300]}
                                     borderRadius={5}
@@ -184,7 +184,7 @@ const DashboardPage = ({ route, navigation }) => {
                                 onPress={() => navigation.navigate("SEARCH")}
                             >
                                 <Center
-                                    width={vw * 0.46}
+                                    width={vw * 0.45}
                                     height={vh * 0.3}
                                     bgColor={colors.primary[300]}
                                     borderRadius={5}
@@ -206,7 +206,7 @@ const DashboardPage = ({ route, navigation }) => {
                                 }
                             >
                                 <Center
-                                    width={vw * 0.46}
+                                    width={vw * 0.45}
                                     height={vh * 0.3}
                                     bgColor={colors.primary[300]}
                                     borderRadius={5}
