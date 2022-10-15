@@ -3,7 +3,9 @@ import { Pressable, StyleSheet } from "react-native";
 import { Text, Box, Image, Flex } from "native-base";
 import { AirbnbRating } from "react-native-ratings";
 import { colors } from "../theme";
+import { useDimensions } from "../utils";
 const Card = (props) => {
+    const [vw, vh] = useDimensions();
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating);
     };
@@ -37,12 +39,12 @@ const Card = (props) => {
                     />
                 </Box>
 
-                <Flex direction="row" p={2} justifyContent="space-between">
-                    <Text color={colors.primary[300]}>{props.title}</Text>
-                    <Box mt={1} ml={3}>
+                
+                    <Text ml={2} color={colors.primary[300]}>{props.title}</Text>
+                    <Box mt={1} ml={- vw * 0.12}>
                         <AirbnbRating size={10} showRating={false} />
                     </Box>
-                </Flex>
+              
                 <Text color={colors.primary[300]} px={2}>
                     {props.price} TK
                 </Text>
