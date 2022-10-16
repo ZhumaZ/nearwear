@@ -98,7 +98,7 @@ const ProductSingle = ({ route, navigation }) => {
                         })
                     }
                 >
-                    Buy Now | 500 TK
+                    Buy Now | {dress?.price} TK
                 </Button>
             ) : user.type === "provider" ? (
                 <Button
