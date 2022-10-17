@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Avatar,
     Box,
@@ -23,11 +23,13 @@ import { useDimensions } from "../utils";
 import OrderCard from "../components/OrderCard";
 import OrderCardList from "../components/OrderCardList";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { env } from "../../env";
 
 const DashboardPage = ({ route, navigation }) => {
     const [vh, vw] = useDimensions();
     const [activeOrderBar, setActiveOrderBar] = useState("all");
-    console.log("route", route.params);
+    const [orderData, setOrderData] = useState([]);
     const rentor = route.params.type === "rentor" ? true : false;
     const provider = route.params.type === "provider" ? true : false;
     const admin = route.params.type === "admin" ? true : false;
@@ -35,7 +37,31 @@ const DashboardPage = ({ route, navigation }) => {
     const user = useSelector((state) => state.user);
 
     // Admin click handlers
-    const handleActiveOrderBar = (value) => {
+    const handleActiveOrderBar = async (value) => {
+        let response;
+        if (value !== "all") {
+            response = await axios.get(`${env.BASE_URL}/orders`, {
+                params: {
+                    status: value,
+                },
+                headers: {
+                    Authorization: "Bearer " + user.token,
+                },
+            });
+        } else {
+            response = await axios.get(`${env.BASE_URL}/orders`, {
+                params: {},
+                headers: {
+                    Authorization: "Bearer " + user.token,
+                },
+            });
+        }
+
+        console.log("response ------>", response.data);
+
+        if (response.status === 200) {
+            setOrderData(response.data);
+        }
         setActiveOrderBar(value);
     };
 
@@ -46,8 +72,22 @@ const DashboardPage = ({ route, navigation }) => {
     const handleSendMessage = (value) => {
         console.log("Send Message - Id ", value);
     };
-    const handleManage = (value) => {
-        console.log("Manage product - Id ", value);
+    const handleManage = async (_id, status) => {
+        console.log(_id, status, user.token);
+        const response = await axios.patch(
+            `${env.BASE_URL}/order`,
+            {
+                _id,
+                status,
+            },
+            {
+                headers: {
+                    Authorization: "Bearer " + user.token,
+                },
+            }
+        );
+
+        console.log(response);
     };
 
     // Rentor click handlers
@@ -66,7 +106,10 @@ const DashboardPage = ({ route, navigation }) => {
         });
     };
 
-    console.log(route.params);
+    useEffect(() => {
+        handleActiveOrderBar("all");
+    }, []);
+
     return (
         <ScrollView>
             <SafeAreaView>
@@ -142,7 +185,11 @@ const DashboardPage = ({ route, navigation }) => {
                         <></>
                     )}
                     {provider ? (
-                        <Flex direction="row" flexWrap="wrap" justifyContent="space-around">
+                        <Flex
+                            direction="row"
+                            flexWrap="wrap"
+                            justifyContent="space-around"
+                        >
                             <Pressable
                                 onPress={() => navigation.navigate("DRESSADD")}
                             >
@@ -426,27 +473,22 @@ const DashboardPage = ({ route, navigation }) => {
                                         </Pressable>
                                         <Pressable
                                             onPress={() =>
-                                                handleActiveOrderBar(
-                                                    "confirmed"
-                                                )
+                                                handleActiveOrderBar("pending")
                                             }
                                         >
                                             <Box
                                                 bgColor={
-                                                    activeOrderBar ===
-                                                    "confirmed"
+                                                    activeOrderBar === "pending"
                                                         ? colors.primary[300]
                                                         : null
                                                 }
                                                 px={
-                                                    activeOrderBar ===
-                                                    "confirmed"
+                                                    activeOrderBar === "pending"
                                                         ? 10
                                                         : 0
                                                 }
                                                 py={
-                                                    activeOrderBar ===
-                                                    "confirmed"
+                                                    activeOrderBar === "pending"
                                                         ? 0.5
                                                         : 0
                                                 }
@@ -456,18 +498,18 @@ const DashboardPage = ({ route, navigation }) => {
                                                 <Text
                                                     color={
                                                         activeOrderBar ===
-                                                        "confirmed"
+                                                        "pending"
                                                             ? "white"
                                                             : "black"
                                                     }
                                                     fontWeight={
                                                         activeOrderBar ===
-                                                        "confirmed"
+                                                        "pending"
                                                             ? "bold"
                                                             : "normal"
                                                     }
                                                 >
-                                                    Confirmed
+                                                    Pending
                                                 </Text>
                                             </Box>
                                         </Pressable>
@@ -568,6 +610,7 @@ const DashboardPage = ({ route, navigation }) => {
                                     </Flex>
                                     <Box my={1}>
                                         <OrderCardList
+                                            data={orderData}
                                             onPress={handleProductViewInfo}
                                             onSendMessage={handleSendMessage}
                                             onManage={handleManage}
